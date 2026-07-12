@@ -587,7 +587,7 @@ local function init()
             if swamp then
                 for _, desc in ipairs(swamp:GetDescendants()) do
                     if desc:IsA("BasePart") and desc.Name == "SwampKochka_1" then
-                        tpPos = desc.Position + Vector3.new(0, desc.Size.Y / 2 + 5, 0)
+                        tpPos = desc.Position + Vector3.new(0, desc.Size.Y / 2 + 7, 0)
                         break
                     end
                 end
@@ -596,11 +596,11 @@ local function init()
                 local triggers = Workspace:FindFirstChild("Triggers")
                 local trig = triggers and triggers:FindFirstChild("SwampEntrance_Trigger")
                 if trig and trig:IsA("BasePart") then
-                    tpPos = trig.Position + Vector3.new(0, 5, 0)
+                    tpPos = trig.Position + Vector3.new(0, 7, 0)
                 end
             end
             if not tpPos and GameConfig.Zones.Forest then
-                tpPos = GameConfig.Zones.Forest.SpawnPoint + Vector3.new(0, 5, 0)
+                tpPos = GameConfig.Zones.Forest.SpawnPoint + Vector3.new(0, 7, 0)
             end
 
             if hrp and tpPos then

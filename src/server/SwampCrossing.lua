@@ -5,6 +5,7 @@
 
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
+local TweenService = game:GetService("TweenService")
 local Workspace = game:GetService("Workspace")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local ServerScriptService = game:GetService("ServerScriptService")
@@ -17,6 +18,7 @@ local Remotes = require(Shared:WaitForChild("Remotes"))
 local SwampCrossing = {}
 
 local activeCrossings = {} -- [Player] = { checkpoint, fogConn, fallConns, guideToken }
+local stepStates = {} -- [BasePart] = { Started = boolean, Sunk = boolean }
 
 local function getNPCController()
     return _G.NPCController
@@ -62,6 +64,162 @@ local function isInsideBoundsXZ(position: Vector3, bounds): boolean
         and position.X <= maxX
         and position.Z >= minZ
         and position.Z <= maxZ
+end
+
+local function getHitPlayer(hit: BasePart): Player?
+    local model = hit:FindFirstAncestorOfClass("Model")
+    if not model then
+        return nil
+    end
+    return Players:GetPlayerFromCharacter(model)
+end
+
+local function getRouteRandom(): Random
+    if SwampConfig.RouteSeed then
+        return Random.new(SwampConfig.RouteSeed)
+    end
+    return Random.new()
+end
+
+local function getCorridorCenterSegment(corridor)
+    local a = corridor.A
+    local b = corridor.B
+    local dx = math.abs(a.X - b.X)
+    local dz = math.abs(a.Z - b.Z)
+    local y = (a.Y + b.Y) / 2
+
+    if dx >= dz then
+        local z = (a.Z + b.Z) / 2
+        return Vector3.new(a.X, y, z), Vector3.new(b.X, y, z)
+    end
+
+    local x = (a.X + b.X) / 2
+    return Vector3.new(x, y, a.Z), Vector3.new(x, y, b.Z)
+end
+
+local function appendRouteLine(points: { Vector3 }, fromPos: Vector3, toPos: Vector3, rng: Random)
+    local distance = flatDistanceXZ(fromPos, toPos)
+    if distance <= 0.1 then
+        return
+    end
+
+    local minStep = SwampConfig.RouteStepMinDistance or 14
+    local maxStep = math.max(minStep, SwampConfig.RouteStepMaxDistance or 18)
+    local sideJitter = SwampConfig.RouteSideJitter or 0
+    local forwardJitter = SwampConfig.RouteForwardJitter or 0
+    local dir = Vector3.new(toPos.X - fromPos.X, 0, toPos.Z - fromPos.Z).Unit
+    local side = Vector3.new(-dir.Z, 0, dir.X)
+
+    local traveled = 0
+    while distance - traveled > maxStep do
+        traveled += rng:NextNumber(minStep, maxStep)
+        local base = fromPos + dir * traveled
+        local jittered = base
+            + side * rng:NextNumber(-sideJitter, sideJitter)
+            + dir * rng:NextNumber(-forwardJitter, forwardJitter)
+        table.insert(points, Vector3.new(jittered.X, base.Y, jittered.Z))
+    end
+
+    table.insert(points, toPos)
+end
+
+local function buildCorridorRoute(): { Vector3 }
+    local corridors = SwampConfig.PathCorridors or {}
+    local points = {}
+    local rng = getRouteRandom()
+
+    for _, corridor in ipairs(corridors) do
+        if corridor.A and corridor.B then
+            local startPos, endPos = getCorridorCenterSegment(corridor)
+            if #points == 0 then
+                table.insert(points, startPos)
+            else
+                appendRouteLine(points, points[#points], startPos, rng)
+            end
+            appendRouteLine(points, points[#points], endPos, rng)
+        end
+    end
+
+    return points
+end
+
+local function createRouteStep(parent: Instance, index: number, position: Vector3): BasePart
+    local size = SwampConfig.StepSize or Vector3.new(10, 1.2, 10)
+    local model = Instance.new("Model")
+    model.Name = SwampConfig.StepPrefix .. tostring(index)
+    model.Parent = parent
+
+    local step = Instance.new("Part")
+    step.Name = SwampConfig.StepPrefix .. tostring(index)
+    step.Anchored = true
+    step.CanCollide = true
+    step.CanTouch = true
+    step.CanQuery = true
+    step.Material = Enum.Material.SmoothPlastic
+    step.Color = Color3.fromRGB(70, 110, 55)
+    step.Transparency = 0.25
+    step.Size = size
+    step.Position = Vector3.new(position.X, position.Y + size.Y / 2, position.Z)
+    step:SetAttribute("SwampStepIndex", index)
+    step:SetAttribute("GeneratedSwampStep", true)
+    step.Parent = model
+    model.PrimaryPart = step
+
+    local blobCount = math.random(5, 8)
+    for blobIndex = 1, blobCount do
+        local blob = Instance.new("Part")
+        blob.Name = "MossBlob_" .. tostring(blobIndex)
+        blob.Shape = Enum.PartType.Ball
+        blob.Anchored = true
+        blob.CanCollide = false
+        blob.CanTouch = false
+        blob.CanQuery = false
+        blob.Material = (blobIndex % 3 == 0) and Enum.Material.Mud or Enum.Material.Grass
+        blob.Color = (blob.Material == Enum.Material.Mud)
+            and Color3.fromRGB(74, 58, 36)
+            or Color3.fromRGB(54 + math.random(0, 28), 105 + math.random(0, 35), 42)
+
+        local angle = math.random() * math.pi * 2
+        local radius = math.random() * size.X * 0.26
+        local blobX = math.cos(angle) * radius
+        local blobZ = math.sin(angle) * radius
+        local blobSizeX = math.random(22, 42) / 10
+        local blobSizeY = math.random(14, 24) / 10
+        local blobSizeZ = math.random(22, 42) / 10
+        blob.Size = Vector3.new(blobSizeX, blobSizeY, blobSizeZ)
+        blob.Position = step.Position + Vector3.new(blobX, size.Y / 2 + blobSizeY * 0.15, blobZ)
+        blob.Parent = model
+    end
+
+    return step
+end
+
+local function generateRouteSteps(swamp: Instance): Instance?
+    local folderName = SwampConfig.GeneratedFolderName or "GeneratedSwampKochki"
+    local existing = swamp:FindFirstChild(folderName)
+    if existing and SwampConfig.RegenerateRouteSteps then
+        existing:Destroy()
+        existing = nil
+    end
+    if existing then
+        return existing
+    end
+
+    local route = buildCorridorRoute()
+    if #route == 0 then
+        return nil
+    end
+
+    local folder = Instance.new("Folder")
+    folder.Name = folderName
+    folder.Parent = swamp
+
+    for index, position in ipairs(route) do
+        createRouteStep(folder, index, position)
+    end
+
+    print("[SwampCrossing] Сгенерирован маршрут кочек:", #route)
+    return folder
 end
 
 local function ensurePoisonFog(swamp: Instance)
@@ -153,15 +311,16 @@ local function createFallbackSteps(swamp: Instance)
     print("[SwampCrossing] Созданы fallback-кочки:", count)
 end
 
-local function collectWaypoints(swamp: Instance): { Vector3 }
+local function collectStepEntries(root: Instance)
     local numbered = {}
 
-    for _, desc in ipairs(swamp:GetDescendants()) do
+    for _, desc in ipairs(root:GetDescendants()) do
         if desc:IsA("BasePart") then
             local index = string.match(desc.Name, "^" .. SwampConfig.StepPrefix .. "(%d+)$")
             if index then
                 table.insert(numbered, {
                     Order = tonumber(index),
+                    Part = desc,
                     Position = getStepPosition(desc),
                 })
             end
@@ -172,8 +331,12 @@ local function collectWaypoints(swamp: Instance): { Vector3 }
         return a.Order < b.Order
     end)
 
+    return numbered
+end
+
+local function collectWaypoints(entries): { Vector3 }
     local waypoints = {}
-    for _, entry in ipairs(numbered) do
+    for _, entry in ipairs(entries or {}) do
         table.insert(waypoints, entry.Position)
     end
 
@@ -207,38 +370,146 @@ local function getDouRoot(): BasePart?
     return model:FindFirstChild("HumanoidRootPart") or model.PrimaryPart
 end
 
-local function isNearStep(player: Player, waypoints: { Vector3 }): boolean
-    local root = getCharacterRoot(player)
-    if not root then
-        return false
-    end
-    local r = SwampConfig.StepSafeRadius or 5
-    for _, pos in ipairs(waypoints) do
-        if flatDistanceXZ(root.Position, pos) <= r then
-            return true
+local function getNearestActiveStepDistance(position: Vector3, data): number?
+    local nearest: number? = nil
+    for _, entry in ipairs(data.stepEntries or {}) do
+        local state = entry.Part and stepStates[entry.Part]
+        if not state or not state.Sunk then
+            local distance = flatDistanceXZ(position, entry.Position)
+            if not nearest or distance < nearest then
+                nearest = distance
+            end
         end
     end
-    return false
+
+    if not nearest then
+        for _, pos in ipairs(data.waypoints or {}) do
+            local distance = flatDistanceXZ(position, pos)
+            if not nearest or distance < nearest then
+                nearest = distance
+            end
+        end
+    end
+
+    return nearest
 end
 
-local function isSafeFromSwampDamage(player: Player, waypoints: { Vector3 }): boolean
+local function getSwampDanger(player: Player, data)
     local root = getCharacterRoot(player)
     if not root then
-        return true
+        return false, 0
+    end
+
+    local char = player.Character
+    local hum = char and char:FindFirstChildOfClass("Humanoid")
+    if hum then
+        local state = hum:GetState()
+        if state == Enum.HumanoidStateType.Jumping
+            or state == Enum.HumanoidStateType.Freefall
+            or state == Enum.HumanoidStateType.FallingDown then
+            return false, 0
+        end
+    end
+
+    if math.abs(root.AssemblyLinearVelocity.Y) > 3 then
+        return false, 0
     end
 
     if not isInsideBoundsXZ(root.Position, SwampConfig.Bounds) then
-        return true
+        return false, 0
     end
 
     if SwampConfig.ProtectNearGuide then
         local douRoot = getDouRoot()
         if douRoot and flatDistanceXZ(root.Position, douRoot.Position) <= (SwampConfig.GuideSafeRadius or 18) then
-            return true
+            return false, 0
         end
     end
 
-    return isNearStep(player, waypoints)
+    local nearest = getNearestActiveStepDistance(root.Position, data)
+    if nearest and nearest <= (SwampConfig.StepSafeRadius or 5) then
+        return false, nearest
+    end
+
+    return true, nearest or (SwampConfig.StepSafeRadius or 5)
+end
+
+local function calculateSwampDamage(distanceFromStep: number): number
+    local base = SwampConfig.FogDamagePerTick or 5
+    local radius = SwampConfig.StepSafeRadius or 5
+    local scale = SwampConfig.FogDamageDistanceScale or 0.3
+    local maxDamage = SwampConfig.FogDamageMaxPerTick or 22
+    local extra = math.max(0, distanceFromStep - radius) * scale
+    return math.clamp(math.floor(base + extra + 0.5), base, maxDamage)
+end
+
+local function startSinkingStep(entry)
+    local part = entry.Part
+    if not part then
+        return
+    end
+
+    local state = stepStates[part]
+    if state and state.Started then
+        return
+    end
+
+    state = state or {}
+    state.Started = true
+    state.Sunk = false
+    stepStates[part] = state
+
+    local minSeconds = SwampConfig.StepSinkMinSeconds or 3
+    local maxSeconds = math.max(minSeconds, SwampConfig.StepSinkMaxSeconds or 5)
+    local duration = math.random(math.floor(minSeconds * 100), math.floor(maxSeconds * 100)) / 100
+    local depth = SwampConfig.StepSinkDepth or 9
+    part:SetAttribute("Sinking", true)
+
+    local sinkRoot = part.Parent and part.Parent:IsA("Model") and part.Parent or part
+    for _, inst in ipairs(sinkRoot:GetDescendants()) do
+        if inst:IsA("BasePart") then
+            local tween = TweenService:Create(inst, TweenInfo.new(duration, Enum.EasingStyle.Quad, Enum.EasingDirection.In), {
+                Position = inst.Position - Vector3.new(0, depth, 0),
+                Transparency = 1,
+            })
+            tween:Play()
+        end
+    end
+
+    task.delay(duration, function()
+        if part.Parent then
+            state.Sunk = true
+            for _, inst in ipairs(sinkRoot:GetDescendants()) do
+                if inst:IsA("BasePart") then
+                    inst.CanCollide = false
+                    inst.CanTouch = false
+                    inst.CanQuery = false
+                end
+            end
+            part:SetAttribute("Sunk", true)
+        end
+    end)
+end
+
+local function connectStepSinking(player: Player, data)
+    local conns = {}
+    for _, entry in ipairs(data.stepEntries or {}) do
+        local part = entry.Part
+        if part then
+            stepStates[part] = stepStates[part] or { Started = false, Sunk = false }
+            table.insert(conns, part.Touched:Connect(function(hit)
+                local plr = getHitPlayer(hit)
+                if plr ~= player then
+                    return
+                end
+
+                data.playerStepIndex = math.max(data.playerStepIndex or 0, entry.Order or 0)
+                data.checkpoint = entry.Position
+                startSinkingStep(entry)
+            end))
+        end
+    end
+    return conns
 end
 
 local function teleportToCheckpoint(player: Player, position: Vector3)
@@ -261,6 +532,9 @@ local function stopCrossing(player: Player)
         data.fogConn:Disconnect()
     end
     for _, conn in ipairs(data.fallConns or {}) do
+        conn:Disconnect()
+    end
+    for _, conn in ipairs(data.sinkingConns or {}) do
         conn:Disconnect()
     end
 
@@ -305,16 +579,23 @@ function SwampCrossing:Start(player: Player)
         ensurePoisonFog(swamp)
     end
 
-    local waypoints = collectWaypoints(swamp)
-    if #waypoints == 0 then
+    local routeRoot = swamp
+    if SwampConfig.GenerateRouteSteps then
+        routeRoot = generateRouteSteps(swamp) or swamp
+    end
+
+    local stepEntries = collectStepEntries(routeRoot)
+    local waypoints = collectWaypoints(stepEntries)
+    if #waypoints == 0 and not SwampConfig.GenerateRouteSteps then
         waypoints = collectConfiguredWaypoints()
     end
-    if #waypoints == 0 and SwampConfig.GenerateFallbackSteps then
+    if #waypoints == 0 and not SwampConfig.GenerateRouteSteps and SwampConfig.GenerateFallbackSteps then
         createFallbackSteps(swamp)
-        waypoints = collectWaypoints(swamp)
+        stepEntries = collectStepEntries(swamp)
+        waypoints = collectWaypoints(stepEntries)
     end
     if #waypoints == 0 then
-        warn("[SwampCrossing] Нет ручного маршрута: добавьте SwampKochka_1..N в Workspace.Zones.Swamp или RoutePoints в StageWorldConfig")
+        warn("[SwampCrossing] Нет маршрута болота: проверьте PathCorridors, SwampKochka_1..N или RoutePoints")
         if _G.GameManager then
             _G.GameManager.SetStage(player, "MINI_BOSS")
         end
@@ -331,8 +612,12 @@ function SwampCrossing:Start(player: Player)
     activeCrossings[player] = {
         checkpoint = checkpoint,
         waypoints = waypoints,
+        stepEntries = stepEntries,
+        playerStepIndex = 0,
         fallConns = {},
+        sinkingConns = {},
     }
+    activeCrossings[player].sinkingConns = connectStepSinking(player, activeCrossings[player])
 
     Remotes:GetEvent("ShowDialogue"):FireClient(player, DialogueData.BuildShowPayload("DOU_DZOUH_SWAMP", {
         NPCName = "JOHN DOU",
@@ -346,10 +631,20 @@ function SwampCrossing:Start(player: Player)
     ctrl:SetGuide(SwampConfig.GuideNpcId, player, waypoints, {
         waitRadius = SwampConfig.GuideWaitRadius,
         moveTimeout = SwampConfig.MoveTimeout,
+        waitEveryStep = false,
+        maxLeadSteps = SwampConfig.MaxGuideLeadSteps,
+        hurryInterval = SwampConfig.GuideHurryInterval,
+        getPlayerStepIndex = function()
+            local data = activeCrossings[player]
+            return data and data.playerStepIndex or 0
+        end,
+        hurryMessage = function(ahead)
+            return string.format("JOHN DOU: Не отставай. Я уже на %d кочки впереди.", ahead)
+        end,
         onStepReached = function(stepIndex, pos)
             local data = activeCrossings[player]
             if data then
-                data.checkpoint = pos
+                data.guideStepIndex = stepIndex
             end
         end,
         onComplete = function()
@@ -358,19 +653,21 @@ function SwampCrossing:Start(player: Player)
     })
 
     local fallConns = {}
-    for _, desc in ipairs(swamp:GetDescendants()) do
-        if desc:IsA("BasePart") then
-            for _, fallName in ipairs(SwampConfig.FallPartNames) do
-                if desc.Name == fallName or string.find(desc.Name, fallName, 1, true) then
-                    table.insert(fallConns, desc.Touched:Connect(function(hit)
-                        local plr = Players:GetPlayerFromCharacter(hit.Parent)
-                        if plr == player then
-                            local data = activeCrossings[player]
-                            if data and data.checkpoint then
-                                teleportToCheckpoint(player, data.checkpoint)
+    if SwampConfig.TeleportOnFallParts then
+        for _, desc in ipairs(swamp:GetDescendants()) do
+            if desc:IsA("BasePart") then
+                for _, fallName in ipairs(SwampConfig.FallPartNames) do
+                    if desc.Name == fallName or string.find(desc.Name, fallName, 1, true) then
+                        table.insert(fallConns, desc.Touched:Connect(function(hit)
+                            local plr = getHitPlayer(hit)
+                            if plr == player then
+                                local data = activeCrossings[player]
+                                if data and data.checkpoint then
+                                    teleportToCheckpoint(player, data.checkpoint)
+                                end
                             end
-                        end
-                    end))
+                        end))
+                    end
                 end
             end
         end
@@ -378,6 +675,7 @@ function SwampCrossing:Start(player: Player)
     activeCrossings[player].fallConns = fallConns
 
     local lastFogDamage = 0
+    local lastDamageNotice = 0
     activeCrossings[player].fogConn = RunService.Heartbeat:Connect(function()
         if getPlayerStage(player) ~= "SWAMP_JOURNEY" then
             stopCrossing(player)
@@ -389,7 +687,8 @@ function SwampCrossing:Start(player: Player)
             return
         end
 
-        if isSafeFromSwampDamage(player, data.waypoints) then
+        local dangerous, distanceFromStep = getSwampDanger(player, data)
+        if not dangerous then
             return
         end
 
@@ -402,7 +701,14 @@ function SwampCrossing:Start(player: Player)
         local char = player.Character
         local hum = char and char:FindFirstChildOfClass("Humanoid")
         if hum and hum.Health > 0 then
-            hum:TakeDamage(SwampConfig.FogDamagePerTick or 8)
+            local damage = calculateSwampDamage(distanceFromStep)
+            hum:TakeDamage(damage)
+            if now - lastDamageNotice >= 4 then
+                lastDamageNotice = now
+                Remotes:GetEvent("UpdateHUD"):FireClient(player, {
+                    Notification = string.format("Болото бьёт сильнее вдали от кочек: -%d HP", damage),
+                })
+            end
         end
     end)
 

@@ -710,6 +710,9 @@ function NPCController:SetGuide(npcId, player, waypoints, options)
     setModelAnchored(model, false)
     local waitRadius = options.waitRadius or 14
     local moveTimeout = options.moveTimeout or 25
+    local waitEveryStep = options.waitEveryStep ~= false
+    local maxLeadSteps = options.maxLeadSteps
+    local hurryInterval = options.hurryInterval or 4
     local guideToken = {}
     npc.GuideToken = guideToken
 
@@ -719,6 +722,7 @@ function NPCController:SetGuide(npcId, player, waypoints, options)
                 return
             end
 
+            humanoid.Jump = true
             humanoid:MoveTo(targetPos)
             local reached = false
             local conn = humanoid.MoveToFinished:Connect(function(ok)
@@ -747,13 +751,42 @@ function NPCController:SetGuide(npcId, player, waypoints, options)
                 Notification = string.format("🌿 Кочка %d/%d — прыгай сюда!", index, #waypoints),
             })
 
-            while npc.State == "GUIDING" and npc.GuideToken == guideToken do
-                local character = player.Character
-                local hrp = character and character:FindFirstChild("HumanoidRootPart")
-                if hrp and flatDistanceXZ(hrp.Position, targetPos) <= waitRadius then
-                    break
+            if waitEveryStep then
+                while npc.State == "GUIDING" and npc.GuideToken == guideToken do
+                    local character = player.Character
+                    local hrp = character and character:FindFirstChild("HumanoidRootPart")
+                    if hrp and flatDistanceXZ(hrp.Position, targetPos) <= waitRadius then
+                        break
+                    end
+                    task.wait(0.25)
                 end
-                task.wait(0.25)
+            elseif maxLeadSteps then
+                local lastHurryAt = 0
+                while npc.State == "GUIDING" and npc.GuideToken == guideToken do
+                    local playerStepIndex = 0
+                    if options.getPlayerStepIndex then
+                        playerStepIndex = options.getPlayerStepIndex() or 0
+                    end
+
+                    local ahead = index - playerStepIndex
+                    if ahead <= maxLeadSteps then
+                        break
+                    end
+
+                    local now = tick()
+                    if now - lastHurryAt >= hurryInterval then
+                        lastHurryAt = now
+                        local message = "JOHN DOU: Не отставай, прыгай по кочкам!"
+                        if options.hurryMessage then
+                            message = options.hurryMessage(ahead, index, #waypoints)
+                        end
+                        Remotes:GetEvent("UpdateHUD"):FireClient(player, {
+                            Notification = message,
+                        })
+                    end
+
+                    task.wait(0.35)
+                end
             end
         end
 
