@@ -1,0 +1,1245 @@
+  10:51:32.197  > local function line(indent, inst)
+	print(string.rep("  ", indent) .. inst.Name .. "  [" .. inst.ClassName .. "]")
+end
+
+local function walk(inst, indent, maxDepth, depth)
+	depth = depth or 0
+	if depth > maxDepth then return end
+	line(indent, inst)
+	for _, ch in ipairs(inst:GetChildren()) do
+		walk(ch, indent + 1, maxDepth, depth + 1)
+	end
+end
+
+print("======== StarterPack ========")
+walk(game:GetService("StarterPack"), 0, 10)
+
+print("======== StarterPlayer.StarterGear ========")
+local sp = game:GetService("StarterPlayer")
+local gear = sp:FindFirstChild("StarterGear")
+if gear then walk(gear, 0, 10) else print("(нет StarterGear)") end
+
+print("======== ReplicatedStorage (верхний уровень) ========")
+for _, ch in ipairs(game:GetService("ReplicatedStorage"):GetChildren()) do
+	line(0, ch)
+end
+  -  Studio
+  10:51:32.229  ======== StarterPack ========  -  Edit
+  10:51:32.229  StarterPack  [StarterPack]  -  Edit
+  10:51:32.229    Azure  [Tool]  -  Edit
+  10:51:32.229      MouseIcon  [LocalScript]  -  Edit
+  10:51:32.229      Client  [LocalScript]  -  Edit
+  10:51:32.229      SoulMonitor  [Script]  -  Edit
+  10:51:32.229        SoulFire  [ParticleEmitter]  -  Edit
+  10:51:32.229      Server  [Script]  -  Edit
+  10:51:32.229        SoulScript  [Script]  -  Edit
+  10:51:32.229          Decimate  [Script]  -  Edit
+  10:51:32.229            SoulRise_R6  [Animation]  -  Edit
+  10:51:32.229            SoulRise_R15  [Animation]  -  Edit
+  10:51:32.230            SoulFire  [ParticleEmitter]  -  Edit
+  10:51:32.230          Tool  [ObjectValue]  -  Edit
+  10:51:32.230          Creator  [ObjectValue]  -  Edit
+  10:51:32.230          SoulCount  [ObjectValue]  -  Edit
+  10:51:32.230        Decimate  [Script]  -  Edit
+  10:51:32.230          SoulFire  [ParticleEmitter]  -  Edit
+  10:51:32.230          SoulRise_R6  [Animation]  -  Edit
+  10:51:32.230          SoulRise_R15  [Animation]  -  Edit
+  10:51:32.230        SoulHunt  [Script]  -  Edit
+  10:51:32.230          SoulHunt_Client  [LocalScript]  -  Edit
+  10:51:32.230            ScarySky  [Sky]  -  Edit
+  10:51:32.230          SoulHunt_Seeker  [LocalScript]  -  Edit
+  10:51:32.230            SoulUI  [BillboardGui]  -  Edit
+  10:51:32.230              SoulButton  [ImageButton]  -  Edit
+  10:51:32.230              Distance  [TextLabel]  -  Edit
+  10:51:32.230              TargetName  [TextLabel]  -  Edit
+  10:51:32.230          Gong  [Sound]  -  Edit
+  10:51:32.230            PitchShiftSoundEffect  [PitchShiftSoundEffect]  -  Edit
+  10:51:32.230        AfterImageScript  [Script]  -  Edit
+  10:51:32.230          Decimate  [Script]  -  Edit
+  10:51:32.230            SoulFire  [ParticleEmitter]  -  Edit
+  10:51:32.231            SoulRise_R6  [Animation]  -  Edit
+  10:51:32.231            SoulRise_R15  [Animation]  -  Edit
+  10:51:32.231          SlowScript  [Script]  -  Edit
+  10:51:32.231        SoulFire  [ParticleEmitter]  -  Edit
+  10:51:32.231        Berserk_Aura  [ParticleEmitter]  -  Edit
+  10:51:32.231      DeathSouls  [Script]  -  Edit
+  10:51:32.231        SoulScript  [Script]  -  Edit
+  10:51:32.231          Tool  [ObjectValue]  -  Edit
+  10:51:32.231          Creator  [ObjectValue]  -  Edit
+  10:51:32.231          SoulCount  [ObjectValue]  -  Edit
+  10:51:32.231        SoulFire_Large  [ParticleEmitter]  -  Edit
+  10:51:32.231      CresHorror  [Script]  -  Edit
+  10:51:32.231      Animations  [Folder]  -  Edit
+  10:51:32.231        R6  [Folder]  -  Edit
+  10:51:32.231          Darken  [Animation]  -  Edit
+  10:51:32.231          Slash  [Animation]  -  Edit
+  10:51:32.231          Slam  [Animation]  -  Edit
+  10:51:32.231        R15  [Folder]  -  Edit
+  10:51:32.231          Darken  [Animation]  -  Edit
+  10:51:32.231          Slash  [Animation]  -  Edit
+  10:51:32.231          Slam  [Animation]  -  Edit
+  10:51:32.231      ThumbnailPose  [Keyframe]  -  Edit
+  10:51:32.231        LowerTorso  [Pose]  -  Edit
+  10:51:32.231          LeftUpperLeg  [Pose]  -  Edit
+  10:51:32.232          RightUpperLeg  [Pose]  -  Edit
+  10:51:32.232          UpperTorso  [Pose]  -  Edit
+  10:51:32.232        RightLowerArm  [Pose]  -  Edit
+  10:51:32.232          RightHand  [Pose]  -  Edit
+  10:51:32.232        UpperTorso  [Pose]  -  Edit
+  10:51:32.232          RightUpperArm  [Pose]  -  Edit
+  10:51:32.232          LeftUpperArm  [Pose]  -  Edit
+  10:51:32.232          Head  [Pose]  -  Edit
+  10:51:32.232        RightLowerLeg  [Pose]  -  Edit
+  10:51:32.232          RightFoot  [Pose]  -  Edit
+  10:51:32.232        LeftLowerLeg  [Pose]  -  Edit
+  10:51:32.232          LeftFoot  [Pose]  -  Edit
+  10:51:32.232        LeftUpperArm  [Pose]  -  Edit
+  10:51:32.232          LeftLowerArm  [Pose]  -  Edit
+  10:51:32.232        HumanoidRootPart  [Pose]  -  Edit
+  10:51:32.232          LowerTorso  [Pose]  -  Edit
+  10:51:32.232        LeftLowerArm  [Pose]  -  Edit
+  10:51:32.232          LeftHand  [Pose]  -  Edit
+  10:51:32.232        RightUpperLeg  [Pose]  -  Edit
+  10:51:32.232          RightLowerLeg  [Pose]  -  Edit
+  10:51:32.232        RightUpperArm  [Pose]  -  Edit
+  10:51:32.232          RightLowerArm  [Pose]  -  Edit
+  10:51:32.232        LeftUpperLeg  [Pose]  -  Edit
+  10:51:32.232          LeftLowerLeg  [Pose]  -  Edit
+  10:51:32.232      Fireball  [Accessory]  -  Edit
+  10:51:32.232        Despawn  [Script]  -  Edit
+  10:51:32.233        Handle  [Part]  -  Edit
+  10:51:32.233          LeftGripAttachment  [Attachment]  -  Edit
+  10:51:32.233          OriginalSize  [Vector3Value]  -  Edit
+  10:51:32.233          SoulFire  [ParticleEmitter]  -  Edit
+  10:51:32.233          TouchInterest  [TouchTransmitter]  -  Edit
+  10:51:32.233      Handle  [Part]  -  Edit
+  10:51:32.233        Slash  [Sound]  -  Edit
+  10:51:32.233        Lunge  [Sound]  -  Edit
+  10:51:32.233          EchoSoundEffect  [EchoSoundEffect]  -  Edit
+  10:51:32.233        Unsheath  [Sound]  -  Edit
+  10:51:32.233        Consume  [Sound]  -  Edit
+  10:51:32.233          PitchShiftSoundEffect  [PitchShiftSoundEffect]  -  Edit
+  10:51:32.233        Purge  [Sound]  -  Edit
+  10:51:32.233          PitchShiftSoundEffect  [PitchShiftSoundEffect]  -  Edit
+  10:51:32.233        Effect  [Attachment]  -  Edit
+  10:51:32.233          E  [ParticleEmitter]  -  Edit
+  10:51:32.233   ▶         ParticleEmitter2  [ParticleEmitter] (x2)  -  Edit
+  10:51:32.233          Flame  [ParticleEmitter]  -  Edit
+  10:51:32.233          InnerFlame  [ParticleEmitter]  -  Edit
+  10:51:32.233        Light  [PointLight]  -  Edit
+  10:51:32.233          Fire_Effect  [Script]  -  Edit
+  10:51:32.233        RightGripAttachment  [Attachment]  -  Edit
+  10:51:32.233        Mesh  [SpecialMesh]  -  Edit
+  10:51:32.233        Sparkles  [Sparkles]  -  Edit
+  10:51:32.234        Eho1  [SoundGroup]  -  Edit
+  10:51:32.234          ReverbSoundEffect  [ReverbSoundEffect]  -  Edit
+  10:51:32.234        SoulFire  [ParticleEmitter]  -  Edit
+  10:51:32.234    Put in starterpack also change this to be named bat  [Tool]  -  Edit
+  10:51:32.234      SwordScript  [Script]  -  Edit
+  10:51:32.234      MouseIcon  [LocalScript]  -  Edit
+  10:51:32.234      Handle  [Part]  -  Edit
+  10:51:32.234        SwordSlash  [Sound]  -  Edit
+  10:51:32.234        SwordLunge  [Sound]  -  Edit
+  10:51:32.234        Unsheath  [Sound]  -  Edit
+  10:51:32.234        Mesh  [SpecialMesh]  -  Edit
+  10:51:32.234    Ban Hammer  [Tool]  -  Edit
+  10:51:32.234      Server  [Script]  -  Edit
+  10:51:32.234        Swing  [Animation]  -  Edit
+  10:51:32.234      Handle  [MeshPart]  -  Edit
+  10:51:32.234        Ban  [Sound]  -  Edit
+  10:51:32.234        Swing  [Sound]  -  Edit
+  10:51:32.234        ParticleEmitter  [ParticleEmitter]  -  Edit
+  10:51:32.234        Trail  [Trail]  -  Edit
+  10:51:32.234        Attachment1  [Attachment]  -  Edit
+  10:51:32.234        Attachment0  [Attachment]  -  Edit
+  10:51:32.234    Dragon Fire Sword  [Tool]  -  Edit
+  10:51:32.234      SwordScript  [Script]  -  Edit
+  10:51:32.235        MainAttackDamage  [Script]  -  Edit
+  10:51:32.235          Owner  [ObjectValue]  -  Edit
+  10:51:32.235      LocalScript  [LocalScript]  -  Edit
+  10:51:32.235      RunAnim  [StringValue]  -  Edit
+  10:51:32.235      Equip  [Animation]  -  Edit
+  10:51:32.235      Hold  [Animation]  -  Edit
+  10:51:32.235      LeftSwingFast  [Animation]  -  Edit
+  10:51:32.235      OverHeadSwing  [Animation]  -  Edit
+  10:51:32.235      LeftSlash  [Animation]  -  Edit
+  10:51:32.235      RightSlash  [Animation]  -  Edit
+  10:51:32.235      RightSwingFast  [Animation]  -  Edit
+  10:51:32.235      Cost  [IntValue]  -  Edit
+  10:51:32.235      Handle  [Part]  -  Edit
+  10:51:32.235        FlashSound  [Sound]  -  Edit
+  10:51:32.235        SlashSound  [Sound]  -  Edit
+  10:51:32.235   ▶       Sound  [Sound] (x2)  -  Edit
+  10:51:32.235        Mesh  [SpecialMesh]  -  Edit
+  10:51:32.235        Fire  [Fire]  -  Edit
+  10:51:32.235    SwordOfLight  [Tool]  -  Edit
+  10:51:32.235      Server  [Script]  -  Edit
+  10:51:32.235        TimeChange  [Script]  -  Edit
+  10:51:32.235          TimeSound  [Sound]  -  Edit
+  10:51:32.235          ChargeReady  [Sound]  -  Edit
+  10:51:32.236          Strike  [Sound]  -  Edit
+  10:51:32.236          CelestialCircle  [SurfaceGui]  -  Edit
+  10:51:32.236            Circle  [ImageLabel]  -  Edit
+  10:51:32.236          Stars  [ParticleEmitter]  -  Edit
+  10:51:32.236          StarSplash  [ParticleEmitter]  -  Edit
+  10:51:32.236        LightWarp  [Script]  -  Edit
+  10:51:32.236          BezierCurves  [ModuleScript]  -  Edit
+  10:51:32.236          DisableBackpack  [LocalScript]  -  Edit
+  10:51:32.236          EnableBackpack  [LocalScript]  -  Edit
+  10:51:32.236          FixCam  [LocalScript]  -  Edit
+  10:51:32.236          TrackOrb  [LocalScript]  -  Edit
+  10:51:32.236          LightEffects  [Folder]  -  Edit
+  10:51:32.236            Stars  [ParticleEmitter]  -  Edit
+  10:51:32.236            Trail  [Trail]  -  Edit
+  10:51:32.236        SoLDefense  [Script]  -  Edit
+  10:51:32.236          HealLight  [ParticleEmitter]  -  Edit
+  10:51:32.236      Client  [LocalScript]  -  Edit
+  10:51:32.236      MouseIcon  [LocalScript]  -  Edit
+  10:51:32.236      Animations  [Folder]  -  Edit
+  10:51:32.236        R15  [Folder]  -  Edit
+  10:51:32.236          ChargeAnim  [Animation]  -  Edit
+  10:51:32.236          SlashAnim  [Animation]  -  Edit
+  10:51:32.236          StabAnim  [Animation]  -  Edit
+  10:51:32.236          SummonAnim  [Animation]  -  Edit
+  10:51:32.237        R6  [Folder]  -  Edit
+  10:51:32.237          ChargeAnim  [Animation]  -  Edit
+  10:51:32.237          SlashAnim  [Animation]  -  Edit
+  10:51:32.237          StabAnim  [Animation]  -  Edit
+  10:51:32.237          SummonAnim  [Animation]  -  Edit
+  10:51:32.237      ThumbnailPose  [Keyframe]  -  Edit
+  10:51:32.237        LowerTorso  [Pose]  -  Edit
+  10:51:32.237          LeftUpperLeg  [Pose]  -  Edit
+  10:51:32.237          RightUpperLeg  [Pose]  -  Edit
+  10:51:32.237          UpperTorso  [Pose]  -  Edit
+  10:51:32.237        RightLowerArm  [Pose]  -  Edit
+  10:51:32.237          RightHand  [Pose]  -  Edit
+  10:51:32.237        LeftUpperArm  [Pose]  -  Edit
+  10:51:32.237          LeftLowerArm  [Pose]  -  Edit
+  10:51:32.237        UpperTorso  [Pose]  -  Edit
+  10:51:32.237          RightUpperArm  [Pose]  -  Edit
+  10:51:32.237          LeftUpperArm  [Pose]  -  Edit
+  10:51:32.237          Head  [Pose]  -  Edit
+  10:51:32.237        RightLowerLeg  [Pose]  -  Edit
+  10:51:32.237          RightFoot  [Pose]  -  Edit
+  10:51:32.237        LeftLowerLeg  [Pose]  -  Edit
+  10:51:32.237          LeftFoot  [Pose]  -  Edit
+  10:51:32.237        RightUpperLeg  [Pose]  -  Edit
+  10:51:32.237          RightLowerLeg  [Pose]  -  Edit
+  10:51:32.238        HumanoidRootPart  [Pose]  -  Edit
+  10:51:32.238          LowerTorso  [Pose]  -  Edit
+  10:51:32.238        LeftUpperLeg  [Pose]  -  Edit
+  10:51:32.238          LeftLowerLeg  [Pose]  -  Edit
+  10:51:32.238        RightUpperArm  [Pose]  -  Edit
+  10:51:32.238          RightLowerArm  [Pose]  -  Edit
+  10:51:32.238        LeftLowerArm  [Pose]  -  Edit
+  10:51:32.238          LeftHand  [Pose]  -  Edit
+  10:51:32.238      Handle  [Part]  -  Edit
+  10:51:32.238        Lunge  [Sound]  -  Edit
+  10:51:32.238        Unsheath  [Sound]  -  Edit
+  10:51:32.238        SwordMesh  [SpecialMesh]  -  Edit
+  10:51:32.238        Effect  [Attachment]  -  Edit
+  10:51:32.238          Flare  [ParticleEmitter]  -  Edit
+  10:51:32.238        BeamB  [Attachment]  -  Edit
+  10:51:32.238        Light  [Beam]  -  Edit
+  10:51:32.238        Rays_Thin  [ParticleEmitter]  -  Edit
+  10:51:32.238        Light2  [Beam]  -  Edit
+  10:51:32.238        Effect2  [Attachment]  -  Edit
+  10:51:32.238        PointLight  [PointLight]  -  Edit
+  10:51:32.238        RightGripAttachment  [Attachment]  -  Edit
+  10:51:32.238    Shotgun  [Tool]  -  Edit
+  10:51:32.238      SPAS  [LocalScript]  -  Edit
+  10:51:32.239      ArmWeld [Shotgun]  [LocalScript]  -  Edit
+  10:51:32.239      Patrol [Shotgun]  [LocalScript]  -  Edit
+  10:51:32.239   ▶     Welding  [Script] (x2)  -  Edit
+  10:51:32.239      Recoil  [Animation]  -  Edit
+  10:51:32.239      WeaponHud  [ScreenGui]  -  Edit
+  10:51:32.239        AmmoHud  [Frame]  -  Edit
+  10:51:32.239          ForwardSlash  [TextLabel]  -  Edit
+  10:51:32.239          ClipAmmo  [TextLabel]  -  Edit
+  10:51:32.239          TotalAmmo  [TextLabel]  -  Edit
+  10:51:32.239        Crosshair  [Frame]  -  Edit
+  10:51:32.239          TopFrame  [Frame]  -  Edit
+  10:51:32.239          RightFrame  [Frame]  -  Edit
+  10:51:32.239          LeftFrame  [Frame]  -  Edit
+  10:51:32.239          TargetHitImage  [ImageLabel]  -  Edit
+  10:51:32.239          ReloadingLabel  [TextLabel]  -  Edit
+  10:51:32.239          BottomFrame  [Frame]  -  Edit
+  10:51:32.239        Reload  [Frame]  -  Edit
+  10:51:32.239          Reload  [TextLabel]  -  Edit
+  10:51:32.239      Handle  [Part]  -  Edit
+  10:51:32.240        FireSound  [Sound]  -  Edit
+  10:51:32.240        PumpSound  [Sound]  -  Edit
+  10:51:32.240        Reload  [Sound]  -  Edit
+  10:51:32.240        EquipSound  [Sound]  -  Edit
+  10:51:32.240        Tick  [Sound]  -  Edit
+  10:51:32.240        Flash  [PointLight]  -  Edit
+  10:51:32.240        Mesh  [SpecialMesh]  -  Edit
+  10:51:32.240      Part  [Part]  -  Edit
+  10:51:32.240        Mesh  [SpecialMesh]  -  Edit
+  10:51:32.240    6 gold chain guns  [Tool]  -  Edit
+  10:51:32.240      LocalScript  [LocalScript]  -  Edit
+  10:51:32.240        AmmoDisplay  [ScreenGui]  -  Edit
+  10:51:32.240          Frame  [Frame]  -  Edit
+  10:51:32.240            Ammo  [Frame]  -  Edit
+  10:51:32.240              MagCounter  [TextLabel]  -  Edit
+  10:51:32.240                GuiPart  [TextLabel]  -  Edit
+  10:51:32.240                CounterPart  [TextLabel]  -  Edit
+  10:51:32.241                GuiPartFx  [TextLabel]  -  Edit
+  10:51:32.241                GuiPart  [TextLabel]  -  Edit
+  10:51:32.241              AmmoCounter  [TextLabel]  -  Edit
+  10:51:32.241   ▶               GuiPart  [TextLabel] (x2)  -  Edit
+  10:51:32.241                CounterPart  [TextLabel]  -  Edit
+  10:51:32.241                GuiPartFx  [TextLabel]  -  Edit
+  10:51:32.241   ▶               GuiPart  [TextLabel] (x5)  -  Edit
+  10:51:32.241            CurrentWeapon  [TextLabel]  -  Edit
+  10:51:32.241      Script  [Script]  -  Edit
+  10:51:32.241        Recoil  [LocalScript]  -  Edit
+  10:51:32.241      CastLaser  [LocalScript]  -  Edit
+  10:51:32.241        Hit  [Sound]  -  Edit
+  10:51:32.241      qPerfectionWeld  [Script]  -  Edit
+  10:51:32.241      Configuration  [Configuration]  -  Edit
+  10:51:32.241        Burst  [Folder]  -  Edit
+  10:51:32.241          Bullets  [IntConstrainedValue]  -  Edit
+  10:51:32.241          Offset  [Vector3Value]  -  Edit
+  10:51:32.242        Damage  [DoubleConstrainedValue]  -  Edit
+  10:51:32.242        Range  [NumberValue]  -  Edit
+  10:51:32.242        Automatic  [BoolValue]  -  Edit
+  10:51:32.242        Ammo  [Folder]  -  Edit
+  10:51:32.242          Magazines  [IntConstrainedValue]  -  Edit
+  10:51:32.242          ClipSize  [IntConstrainedValue]  -  Edit
+  10:51:32.242        Accuracy  [Vector3Value]  -  Edit
+  10:51:32.242        ReloadTime  [NumberValue]  -  Edit
+  10:51:32.242        ToolName  [StringValue]  -  Edit
+  10:51:32.242        InstantKill  [BoolValue]  -  Edit
+  10:51:32.242        IgnoreForceField  [BoolValue]  -  Edit
+  10:51:32.242        AddRecoil  [BoolValue]  -  Edit
+  10:51:32.242        HeadShotMultiplier  [NumberValue]  -  Edit
+  10:51:32.242        DestroyParts  [BoolValue]  -  Edit
+  10:51:32.242        SuperPartDestruction  [BoolValue]  -  Edit
+  10:51:32.242      Modules  [Folder]  -  Edit
+  10:51:32.242        Functions  [ModuleScript]  -  Edit
+  10:51:32.242      Remotes  [Folder]  -  Edit
+  10:51:32.242        ServerControl  [RemoteFunction]  -  Edit
+  10:51:32.243        ClientControl  [RemoteFunction]  -  Edit
+  10:51:32.243      Hold  [Animation]  -  Edit
+  10:51:32.243      Fire  [Animation]  -  Edit
+  10:51:32.243      Reload  [Animation]  -  Edit
+  10:51:32.243      Main  [Part]  -  Edit
+  10:51:32.243        Mesh  [BlockMesh]  -  Edit
+  10:51:32.243        FlashFX  [PointLight]  -  Edit
+  10:51:32.243        FX  [ParticleEmitter]  -  Edit
+  10:51:32.243      Handle  [Part]  -  Edit
+  10:51:32.244        Fire  [Sound]  -  Edit
+  10:51:32.244          DistortionSoundEffect  [DistortionSoundEffect]  -  Edit
+  10:51:32.244        Reload  [Sound]  -  Edit
+  10:51:32.244        NoAmmo  [Sound]  -  Edit
+  10:51:32.244        HeadShot  [Sound]  -  Edit
+  10:51:32.244        Mesh  [SpecialMesh]  -  Edit
+  10:51:32.244        Muzzle  [Attachment]  -  Edit
+  10:51:32.244        Light  [SurfaceLight]  -  Edit
+  10:51:32.244        Handle2  [Part]  -  Edit
+  10:51:32.245          Mesh  [SpecialMesh]  -  Edit
+  10:51:32.245        Handle3  [Part]  -  Edit
+  10:51:32.245          Mesh  [SpecialMesh]  -  Edit
+  10:51:32.245        Handle4  [Part]  -  Edit
+  10:51:32.245          Mesh  [SpecialMesh]  -  Edit
+  10:51:32.245          Handle2  [Part]  -  Edit
+  10:51:32.245            Mesh  [SpecialMesh]  -  Edit
+  10:51:32.245          Handle3  [Part]  -  Edit
+  10:51:32.245            Mesh  [SpecialMesh]  -  Edit
+  10:51:32.245    HyperlaserGun  [Tool]  -  Edit
+  10:51:32.245      ToolScript  [LocalScript]  -  Edit
+  10:51:32.245      MouseIcon  [LocalScript]  -  Edit
+  10:51:32.245      Script  [Script]  -  Edit
+  10:51:32.245      Handle  [Part]  -  Edit
+  10:51:32.245        Fire  [Sound]  -  Edit
+  10:51:32.245        Reload  [Sound]  -  Edit
+  10:51:32.245        HitFade  [Sound]  -  Edit
+  10:51:32.245        Mesh  [SpecialMesh]  -  Edit
+  10:51:32.245        PointLight  [PointLight]  -  Edit
+  10:51:32.245    fat man  [Tool]  -  Edit
+  10:51:32.245      PlantBomb  [Script]  -  Edit
+  10:51:32.245      Bomb  [Script]  -  Edit
+  10:51:32.246      MouseIcon  [LocalScript]  -  Edit
+  10:51:32.246      qPerfectionWeld  [Script]  -  Edit
+  10:51:32.246      BombScripts  [Folder]  -  Edit
+  10:51:32.246        Atom  [Script]  -  Edit
+  10:51:32.246          Explode  [Sound]  -  Edit
+  10:51:32.246          Explode2  [Sound]  -  Edit
+  10:51:32.246      Handle  [Part]  -  Edit
+  10:51:32.246        Mesh  [SpecialMesh]  -  Edit
+  10:51:32.246        death bomb  [Model]  -  Edit
+  10:51:32.246          Tail  [Model]  -  Edit
+  10:51:32.246   ▶           Part  [Part] (x2)  -  Edit
+  10:51:32.246            Wedge  [WedgePart]  -  Edit
+  10:51:32.246   ▶           Part  [Part] (x3)  -  Edit
+  10:51:32.246   ▶           Wedge  [WedgePart] (x6)  -  Edit
+  10:51:32.247   ▶           Part  [Part] (x3)  -  Edit
+  10:51:32.247            Wedge  [WedgePart]  -  Edit
+  10:51:32.247          Parts  [Model]  -  Edit
+  10:51:32.247            Model  [Model]  -  Edit
+  10:51:32.247              Part  [Part]  -  Edit
+  10:51:32.247                Mesh  [CylinderMesh]  -  Edit
+  10:51:32.247                Snap  [Snap]  -  Edit
+  10:51:32.247              Part  [Part]  -  Edit
+  10:51:32.247                Mesh  [CylinderMesh]  -  Edit
+  10:51:32.247              Part  [Part]  -  Edit
+  10:51:32.247                Mesh  [CylinderMesh]  -  Edit
+  10:51:32.247              Part  [Part]  -  Edit
+  10:51:32.247                Mesh  [CylinderMesh]  -  Edit
+  10:51:32.247              Part  [Part]  -  Edit
+  10:51:32.247                Mesh  [CylinderMesh]  -  Edit
+  10:51:32.247              Part  [Part]  -  Edit
+  10:51:32.247                Mesh  [SpecialMesh]  -  Edit
+  10:51:32.248              Part  [Part]  -  Edit
+  10:51:32.248                Mesh  [CylinderMesh]  -  Edit
+  10:51:32.248              Part  [Part]  -  Edit
+  10:51:32.248                Mesh  [SpecialMesh]  -  Edit
+  10:51:32.248              Part  [Part]  -  Edit
+  10:51:32.248                Mesh  [BlockMesh]  -  Edit
+  10:51:32.248   ▶               Snap  [Snap] (x3)  -  Edit
+  10:51:32.248              Part  [Part]  -  Edit
+  10:51:32.248                Mesh  [CylinderMesh]  -  Edit
+  10:51:32.248              Part  [Part]  -  Edit
+  10:51:32.248                Mesh  [SpecialMesh]  -  Edit
+  10:51:32.248              Part  [Part]  -  Edit
+  10:51:32.248                Mesh  [SpecialMesh]  -  Edit
+  10:51:32.249            Model  [Model]  -  Edit
+  10:51:32.249              Part  [Part]  -  Edit
+  10:51:32.249                Mesh  [CylinderMesh]  -  Edit
+  10:51:32.249                Snap  [Snap]  -  Edit
+  10:51:32.249              Part  [Part]  -  Edit
+  10:51:32.249                Mesh  [CylinderMesh]  -  Edit
+  10:51:32.249              Part  [Part]  -  Edit
+  10:51:32.249                Mesh  [CylinderMesh]  -  Edit
+  10:51:32.249                Snap  [Snap]  -  Edit
+  10:51:32.249              Part  [Part]  -  Edit
+  10:51:32.249                Mesh  [CylinderMesh]  -  Edit
+  10:51:32.249                Snap  [Snap]  -  Edit
+  10:51:32.249              Part  [Part]  -  Edit
+  10:51:32.249                Mesh  [CylinderMesh]  -  Edit
+  10:51:32.249              Part  [Part]  -  Edit
+  10:51:32.249                Mesh  [SpecialMesh]  -  Edit
+  10:51:32.249              Part  [Part]  -  Edit
+  10:51:32.249                Mesh  [CylinderMesh]  -  Edit
+  10:51:32.250              Part  [Part]  -  Edit
+  10:51:32.250                Mesh  [SpecialMesh]  -  Edit
+  10:51:32.250              Part  [Part]  -  Edit
+  10:51:32.250                Mesh  [BlockMesh]  -  Edit
+  10:51:32.250                Snap  [Snap]  -  Edit
+  10:51:32.250              Part  [Part]  -  Edit
+  10:51:32.250                Mesh  [CylinderMesh]  -  Edit
+  10:51:32.250              Part  [Part]  -  Edit
+  10:51:32.250                Mesh  [SpecialMesh]  -  Edit
+  10:51:32.250              Part  [Part]  -  Edit
+  10:51:32.250                Mesh  [SpecialMesh]  -  Edit
+  10:51:32.250            Model  [Model]  -  Edit
+  10:51:32.250              Part  [Part]  -  Edit
+  10:51:32.250                Mesh  [CylinderMesh]  -  Edit
+  10:51:32.250                Snap  [Snap]  -  Edit
+  10:51:32.250              Part  [Part]  -  Edit
+  10:51:32.250                Mesh  [CylinderMesh]  -  Edit
+  10:51:32.250              Part  [Part]  -  Edit
+  10:51:32.250                Mesh  [CylinderMesh]  -  Edit
+  10:51:32.250              Part  [Part]  -  Edit
+  10:51:32.250                Mesh  [CylinderMesh]  -  Edit
+  10:51:32.251              Part  [Part]  -  Edit
+  10:51:32.251                Mesh  [CylinderMesh]  -  Edit
+  10:51:32.251                Snap  [Snap]  -  Edit
+  10:51:32.251              Part  [Part]  -  Edit
+  10:51:32.251                Mesh  [SpecialMesh]  -  Edit
+  10:51:32.251              Part  [Part]  -  Edit
+  10:51:32.251                Mesh  [CylinderMesh]  -  Edit
+  10:51:32.251              Part  [Part]  -  Edit
+  10:51:32.251                Mesh  [SpecialMesh]  -  Edit
+  10:51:32.251              Part  [Part]  -  Edit
+  10:51:32.251                Mesh  [BlockMesh]  -  Edit
+  10:51:32.251   ▶               Snap  [Snap] (x2)  -  Edit
+  10:51:32.251              Part  [Part]  -  Edit
+  10:51:32.251                Mesh  [CylinderMesh]  -  Edit
+  10:51:32.251              Part  [Part]  -  Edit
+  10:51:32.251                Mesh  [SpecialMesh]  -  Edit
+  10:51:32.251              Part  [Part]  -  Edit
+  10:51:32.251                Mesh  [SpecialMesh]  -  Edit
+  10:51:32.251            Model  [Model]  -  Edit
+  10:51:32.251              Part  [Part]  -  Edit
+  10:51:32.251                Mesh  [CylinderMesh]  -  Edit
+  10:51:32.251              Part  [Part]  -  Edit
+  10:51:32.252                Mesh  [CylinderMesh]  -  Edit
+  10:51:32.252              Part  [Part]  -  Edit
+  10:51:32.252                Mesh  [CylinderMesh]  -  Edit
+  10:51:32.252              Part  [Part]  -  Edit
+  10:51:32.252                Mesh  [CylinderMesh]  -  Edit
+  10:51:32.252                Snap  [Snap]  -  Edit
+  10:51:32.252              Part  [Part]  -  Edit
+  10:51:32.252                Mesh  [CylinderMesh]  -  Edit
+  10:51:32.252              Part  [Part]  -  Edit
+  10:51:32.252                Mesh  [SpecialMesh]  -  Edit
+  10:51:32.252              Part  [Part]  -  Edit
+  10:51:32.252                Mesh  [CylinderMesh]  -  Edit
+  10:51:32.252              Part  [Part]  -  Edit
+  10:51:32.252                Mesh  [SpecialMesh]  -  Edit
+  10:51:32.252              Part  [Part]  -  Edit
+  10:51:32.252                Mesh  [BlockMesh]  -  Edit
+  10:51:32.252   ▶               Snap  [Snap] (x3)  -  Edit
+  10:51:32.252              Part  [Part]  -  Edit
+  10:51:32.252                Mesh  [CylinderMesh]  -  Edit
+  10:51:32.252              Part  [Part]  -  Edit
+  10:51:32.252                Mesh  [SpecialMesh]  -  Edit
+  10:51:32.253              Part  [Part]  -  Edit
+  10:51:32.253                Mesh  [SpecialMesh]  -  Edit
+  10:51:32.253          Paint  [Model]  -  Edit
+  10:51:32.253   ▶           Part  [Part] (x3)  -  Edit
+  10:51:32.253              Mesh  [CylinderMesh]  -  Edit
+  10:51:32.253   ▶           Part  [Part] (x2)  -  Edit
+  10:51:32.253              Mesh  [CylinderMesh]  -  Edit
+  10:51:32.253            Part  [Part]  -  Edit
+  10:51:32.253              Mesh  [CylinderMesh]  -  Edit
+  10:51:32.253   ▶           Part  [Part] (x2)  -  Edit
+  10:51:32.253              Mesh  [CylinderMesh]  -  Edit
+  10:51:32.253            Part  [Part]  -  Edit
+  10:51:32.253              Mesh  [CylinderMesh]  -  Edit
+  10:51:32.253   ▶           Part  [Part] (x4)  -  Edit
+  10:51:32.254              Mesh  [CylinderMesh]  -  Edit
+  10:51:32.254            Part  [Part]  -  Edit
+  10:51:32.254              Mesh  [CylinderMesh]  -  Edit
+  10:51:32.254            Part  [Part]  -  Edit
+  10:51:32.254              Mesh  [CylinderMesh]  -  Edit
+  10:51:32.254            Part  [Part]  -  Edit
+  10:51:32.254              Mesh  [CylinderMesh]  -  Edit
+  10:51:32.254   ▶           Part  [Part] (x3)  -  Edit
+  10:51:32.254              Mesh  [CylinderMesh]  -  Edit
+  10:51:32.254            Part  [Part]  -  Edit
+  10:51:32.254              Mesh  [CylinderMesh]  -  Edit
+  10:51:32.254   ▶           Part  [Part] (x10)  -  Edit
+  10:51:32.254              Mesh  [CylinderMesh]  -  Edit
+  10:51:32.254   ▶           Part  [Part] (x5)  -  Edit
+  10:51:32.255              Mesh  [CylinderMesh]  -  Edit
+  10:51:32.255            Part  [Part]  -  Edit
+  10:51:32.255              Mesh  [CylinderMesh]  -  Edit
+  10:51:32.255            Part  [Part]  -  Edit
+  10:51:32.255              Mesh  [CylinderMesh]  -  Edit
+  10:51:32.255   ▶           Part  [Part] (x2)  -  Edit
+  10:51:32.255              Mesh  [CylinderMesh]  -  Edit
+  10:51:32.255            Part  [Part]  -  Edit
+  10:51:32.255          Screws  [Model]  -  Edit
+  10:51:32.255            Part  [Part]  -  Edit
+  10:51:32.255              Mesh  [CylinderMesh]  -  Edit
+  10:51:32.256            Part  [Part]  -  Edit
+  10:51:32.256              Mesh  [CylinderMesh]  -  Edit
+  10:51:32.256            Part  [Part]  -  Edit
+  10:51:32.256              Mesh  [CylinderMesh]  -  Edit
+  10:51:32.256            Part  [Part]  -  Edit
+  10:51:32.256              Mesh  [CylinderMesh]  -  Edit
+  10:51:32.256            Part  [Part]  -  Edit
+  10:51:32.256              Mesh  [CylinderMesh]  -  Edit
+  10:51:32.256            Part  [Part]  -  Edit
+  10:51:32.256              Mesh  [CylinderMesh]  -  Edit
+  10:51:32.256            Part  [Part]  -  Edit
+  10:51:32.256              Mesh  [CylinderMesh]  -  Edit
+  10:51:32.256            Part  [Part]  -  Edit
+  10:51:32.256              Mesh  [CylinderMesh]  -  Edit
+  10:51:32.256            Part  [Part]  -  Edit
+  10:51:32.256              Mesh  [CylinderMesh]  -  Edit
+  10:51:32.256            Part  [Part]  -  Edit
+  10:51:32.256              Mesh  [CylinderMesh]  -  Edit
+  10:51:32.256            Part  [Part]  -  Edit
+  10:51:32.257              Mesh  [CylinderMesh]  -  Edit
+  10:51:32.257            Part  [Part]  -  Edit
+  10:51:32.257              Mesh  [CylinderMesh]  -  Edit
+  10:51:32.257            Part  [Part]  -  Edit
+  10:51:32.257              Mesh  [CylinderMesh]  -  Edit
+  10:51:32.257            Part  [Part]  -  Edit
+  10:51:32.257              Mesh  [CylinderMesh]  -  Edit
+  10:51:32.257            Part  [Part]  -  Edit
+  10:51:32.258              Mesh  [CylinderMesh]  -  Edit
+  10:51:32.258            Part  [Part]  -  Edit
+  10:51:32.258              Mesh  [CylinderMesh]  -  Edit
+  10:51:32.258            Part  [Part]  -  Edit
+  10:51:32.258              Mesh  [CylinderMesh]  -  Edit
+  10:51:32.258            Part  [Part]  -  Edit
+  10:51:32.258              Mesh  [CylinderMesh]  -  Edit
+  10:51:32.258            Part  [Part]  -  Edit
+  10:51:32.258              Mesh  [CylinderMesh]  -  Edit
+  10:51:32.258            Part  [Part]  -  Edit
+  10:51:32.258              Mesh  [CylinderMesh]  -  Edit
+  10:51:32.258            Part  [Part]  -  Edit
+  10:51:32.258              Mesh  [CylinderMesh]  -  Edit
+  10:51:32.259            Part  [Part]  -  Edit
+  10:51:32.259              Mesh  [CylinderMesh]  -  Edit
+  10:51:32.259            Part  [Part]  -  Edit
+  10:51:32.259              Mesh  [CylinderMesh]  -  Edit
+  10:51:32.259            Part  [Part]  -  Edit
+  10:51:32.259              Mesh  [CylinderMesh]  -  Edit
+  10:51:32.259          Lamps  [Model]  -  Edit
+  10:51:32.259            Part  [Part]  -  Edit
+  10:51:32.259              Mesh  [CylinderMesh]  -  Edit
+  10:51:32.259            Part  [Part]  -  Edit
+  10:51:32.259              Mesh  [CylinderMesh]  -  Edit
+  10:51:32.259            Part  [Part]  -  Edit
+  10:51:32.259              Mesh  [SpecialMesh]  -  Edit
+  10:51:32.259              SpotLight  [SpotLight]  -  Edit
+  10:51:32.259            Part  [Part]  -  Edit
+  10:51:32.259              Mesh  [SpecialMesh]  -  Edit
+  10:51:32.259              SpotLight  [SpotLight]  -  Edit
+  10:51:32.259            Part  [Part]  -  Edit
+  10:51:32.260              Mesh  [CylinderMesh]  -  Edit
+  10:51:32.260            Part  [Part]  -  Edit
+  10:51:32.260              Mesh  [SpecialMesh]  -  Edit
+  10:51:32.260              SpotLight  [SpotLight]  -  Edit
+  10:51:32.260            Part  [Part]  -  Edit
+  10:51:32.260              Mesh  [CylinderMesh]  -  Edit
+  10:51:32.260            Part  [Part]  -  Edit
+  10:51:32.260              Mesh  [SpecialMesh]  -  Edit
+  10:51:32.260              SpotLight  [SpotLight]  -  Edit
+  10:51:32.260          Shell  [Model]  -  Edit
+  10:51:32.260            head  [UnionOperation]  -  Edit
+  10:51:32.260            Part  [Part]  -  Edit
+  10:51:32.260              Mesh  [CylinderMesh]  -  Edit
+  10:51:32.260            Part  [Part]  -  Edit
+  10:51:32.260              Mesh  [SpecialMesh]  -  Edit
+  10:51:32.260    Ban Hammer  [Tool]  -  Edit
+  10:51:32.260      Server  [Script]  -  Edit
+  10:51:32.260        Swing  [Animation]  -  Edit
+  10:51:32.260      Handle  [MeshPart]  -  Edit
+  10:51:32.261        Ban  [Sound]  -  Edit
+  10:51:32.261        Swing  [Sound]  -  Edit
+  10:51:32.261        ParticleEmitter  [ParticleEmitter]  -  Edit
+  10:51:32.261        Trail  [Trail]  -  Edit
+  10:51:32.261        Attachment1  [Attachment]  -  Edit
+  10:51:32.261        Attachment0  [Attachment]  -  Edit
+  10:51:32.261    Bazooka  [Tool]  -  Edit
+  10:51:32.261      MouseIcon  [LocalScript]  -  Edit
+  10:51:32.261      Server  [Script]  -  Edit
+  10:51:32.261        Rocket  [Script]  -  Edit
+  10:51:32.261        Boom  [Sound]  -  Edit
+  10:51:32.261        Swoosh  [Sound]  -  Edit
+  10:51:32.261      Client  [LocalScript]  -  Edit
+  10:51:32.261      MouseLoc  [RemoteFunction]  -  Edit
+  10:51:32.261      Handle  [Part]  -  Edit
+  10:51:32.261        Mesh  [SpecialMesh]  -  Edit
+  10:51:32.262      Part  [Part]  -  Edit
+  10:51:32.262        Decal  [Decal]  -  Edit
+  10:51:32.262        WeldConstraint  [WeldConstraint]  -  Edit
+  10:51:32.262      Part  [Part]  -  Edit
+  10:51:32.262        Decal  [Decal]  -  Edit
+  10:51:32.262        WeldConstraint  [WeldConstraint]  -  Edit
+  10:51:32.262    Bazooka  [Tool]  -  Edit
+  10:51:32.262      MouseIcon  [LocalScript]  -  Edit
+  10:51:32.262      Server  [Script]  -  Edit
+  10:51:32.262        Rocket  [Script]  -  Edit
+  10:51:32.262        Boom  [Sound]  -  Edit
+  10:51:32.262        Swoosh  [Sound]  -  Edit
+  10:51:32.262      Client  [LocalScript]  -  Edit
+  10:51:32.262      MouseLoc  [RemoteFunction]  -  Edit
+  10:51:32.262      Handle  [Part]  -  Edit
+  10:51:32.262        Mesh  [SpecialMesh]  -  Edit
+  10:51:32.262      Part  [Part]  -  Edit
+  10:51:32.262        Decal  [Decal]  -  Edit
+  10:51:32.262        WeldConstraint  [WeldConstraint]  -  Edit
+  10:51:32.263      Part  [Part]  -  Edit
+  10:51:32.263        Decal  [Decal]  -  Edit
+  10:51:32.263        WeldConstraint  [WeldConstraint]  -  Edit
+  10:51:32.263    Bazooka  [Tool]  -  Edit
+  10:51:32.263      CreateAndFireRocket  [Script]  -  Edit
+  10:51:32.263        Rocket  [Script]  -  Edit
+  10:51:32.263          CameraShake  [LocalScript]  -  Edit
+  10:51:32.263          Creator  [ObjectValue]  -  Edit
+  10:51:32.263        R15  [Folder]  -  Edit
+  10:51:32.263          FireAndReload  [Animation]  -  Edit
+  10:51:32.263        R6  [Folder]  -  Edit
+  10:51:32.263          FireAndReload  [Animation]  -  Edit
+  10:51:32.263        Fire  [ParticleEmitter]  -  Edit
+  10:51:32.263      VisualizeReload  [Script]  -  Edit
+  10:51:32.263      Launcher  [LocalScript]  -  Edit
+  10:51:32.263      MouseIcon  [LocalScript]  -  Edit
+  10:51:32.264      VisualizeReload  [LocalScript]  -  Edit
+  10:51:32.264      FireRocket  [RemoteEvent]  -  Edit
+  10:51:32.264      Handle  [Part]  -  Edit
+  10:51:32.264        Equip  [Sound]  -  Edit
+  10:51:32.264        Fire  [Sound]  -  Edit
+  10:51:32.264        ReloadSound  [Sound]  -  Edit
+  10:51:32.264        Mesh  [SpecialMesh]  -  Edit
+  10:51:32.264        Tip  [Attachment]  -  Edit
+  10:51:32.264          Smoke  [ParticleEmitter]  -  Edit
+  10:51:32.264    tommy gun  [Tool]  -  Edit
+  10:51:32.264      Setting  [ModuleScript]  -  Edit
+  10:51:32.264      GunScript_Server  [Script]  -  Edit
+  10:51:32.265        IgniteScript  [Script]  -  Edit
+  10:51:32.265          Duration  [NumberValue]  -  Edit
+  10:51:32.265          creator  [ObjectValue]  -  Edit
+  10:51:32.265        InflictTarget  [RemoteEvent]  -  Edit
+  10:51:32.265        ChangeAmmoAndClip  [RemoteEvent]  -  Edit
+  10:51:32.265      CHANGE LOG  [Script]  -  Edit
+  10:51:32.265      VisualizeBulletScript  [Script]  -  Edit
+  10:51:32.265      BulletVisualizerScript  [LocalScript]  -  Edit
+  10:51:32.265        Visualize  [BindableEvent]  -  Edit
+  10:51:32.265      nothing  [LocalScript]  -  Edit
+  10:51:32.265      qPerfectionWeld  [Script]  -  Edit
+  10:51:32.265      GunScript_Local  [LocalScript]  -  Edit
+  10:51:32.265        Mouse Sensitivity  [LocalScript]  -  Edit
+  10:51:32.265        GunGUI  [ScreenGui]  -  Edit
+  10:51:32.265          Frame  [Frame]  -  Edit
+  10:51:32.265            Clips  [Frame]  -  Edit
+  10:51:32.265              Label  [TextLabel]  -  Edit
+  10:51:32.265              Frame  [Frame]  -  Edit
+  10:51:32.265              Current  [TextLabel]  -  Edit
+  10:51:32.265              Max  [TextLabel]  -  Edit
+  10:51:32.265              Fill  [Frame]  -  Edit
+  10:51:32.265              NoMoreClip  [TextLabel]  -  Edit
+  10:51:32.265            Ammo  [Frame]  -  Edit
+  10:51:32.266              Label  [TextLabel]  -  Edit
+  10:51:32.266              Current  [TextLabel]  -  Edit
+  10:51:32.266              Max  [TextLabel]  -  Edit
+  10:51:32.266              Fill  [Frame]  -  Edit
+  10:51:32.266              Frame  [Frame]  -  Edit
+  10:51:32.266              Reloading  [TextLabel]  -  Edit
+  10:51:32.266          Scope  [ImageLabel]  -  Edit
+  10:51:32.266   ▶           Crosshair  [Frame] (x3)  -  Edit
+  10:51:32.266        HitEffect  [ParticleEmitter]  -  Edit
+  10:51:32.266        MuzzleEffect  [ParticleEmitter]  -  Edit
+  10:51:32.266          Script  [Script]  -  Edit
+  10:51:32.266      Unequip Event  [Script]  -  Edit
+  10:51:32.266      Equip Event  [Script]  -  Edit
+  10:51:32.266      VisualizeBullet  [RemoteEvent]  -  Edit
+  10:51:32.266      Model  [Model]  -  Edit
+  10:51:32.266        daoler  [Script]  -  Edit
+  10:51:32.266        gnisac  [Script]  -  Edit
+  10:51:32.266        casing  [RemoteEvent]  -  Edit
+  10:51:32.266        reload  [RemoteEvent]  -  Edit
+  10:51:32.266      Bolt  [MeshPart]  -  Edit
+  10:51:32.266      BoltBack  [MeshPart]  -  Edit
+  10:51:32.266      Flash  [UnionOperation]  -  Edit
+  10:51:32.267        Light  [BillboardGui]  -  Edit
+  10:51:32.267          Script  [Script]  -  Edit
+  10:51:32.267        lite  [PointLight]  -  Edit
+  10:51:32.267      shell  [MeshPart]  -  Edit
+  10:51:32.267      Handle  [Part]  -  Edit
+  10:51:32.267        ReloadSound  [Sound]  -  Edit
+  10:51:32.267        ShotgunClipin  [Sound]  -  Edit
+  10:51:32.267        WindDown  [Sound]  -  Edit
+  10:51:32.267        WindUp  [Sound]  -  Edit
+  10:51:32.267        load  [Sound]  -  Edit
+  10:51:32.267        shoot  [Sound]  -  Edit
+  10:51:32.267        ChargeSound  [Sound]  -  Edit
+  10:51:32.267        FireSound  [Sound]  -  Edit
+  10:51:32.267        EquipSound  [Sound]  -  Edit
+  10:51:32.267      Mag  [Part]  -  Edit
+  10:51:32.267        Mesh  [SpecialMesh]  -  Edit
+  10:51:32.267      gun  [Part]  -  Edit
+  10:51:32.267        Mesh  [SpecialMesh]  -  Edit
+  10:51:32.267    John Doe  [Tool]  -  Edit
+  10:51:32.267      qPerfectionWeld  [Script]  -  Edit
+  10:51:32.267      Server  [Script]  -  Edit
+  10:51:32.267      Client  [LocalScript]  -  Edit
+  10:51:32.267      Remote  [RemoteEvent]  -  Edit
+  10:51:32.267      Swing  [Animation]  -  Edit
+  10:51:32.267      Handle  [Part]  -  Edit
+  10:51:32.267        Boom  [Sound]  -  Edit
+  10:51:32.268        Smack  [Sound]  -  Edit
+  10:51:32.268   ▶       ParticleEmitter  [ParticleEmitter] (x2)  -  Edit
+  10:51:32.268      Hitbox  [Part]  -  Edit
+  10:51:32.268        Touch Damage  [Script]  -  Edit
+  10:51:32.268   ▶       ParticleEmitter  [ParticleEmitter] (x2)  -  Edit
+  10:51:32.268        Weld  [ManualWeld]  -  Edit
+  10:51:32.268      CorruptedPart  [Part]  -  Edit
+  10:51:32.268        Mesh  [BlockMesh]  -  Edit
+  10:51:32.268   ▶       ParticleEmitter  [ParticleEmitter] (x2)  -  Edit
+  10:51:32.268        Weld  [ManualWeld]  -  Edit
+  10:51:32.268      CorruptedPart  [Part]  -  Edit
+  10:51:32.268        Mesh  [SpecialMesh]  -  Edit
+  10:51:32.269   ▶       ParticleEmitter  [ParticleEmitter] (x2)  -  Edit
+  10:51:32.269        Weld  [ManualWeld]  -  Edit
+  10:51:32.269      CorruptedPart  [Part]  -  Edit
+  10:51:32.269        Mesh  [SpecialMesh]  -  Edit
+  10:51:32.269   ▶       ParticleEmitter  [ParticleEmitter] (x2)  -  Edit
+  10:51:32.269        Weld  [ManualWeld]  -  Edit
+  10:51:32.269      CorruptedPart  [Part]  -  Edit
+  10:51:32.269        Mesh  [SpecialMesh]  -  Edit
+  10:51:32.269   ▶       ParticleEmitter  [ParticleEmitter] (x2)  -  Edit
+  10:51:32.269        Weld  [ManualWeld]  -  Edit
+  10:51:32.269      CorruptedPart  [Part]  -  Edit
+  10:51:32.269        Mesh  [SpecialMesh]  -  Edit
+  10:51:32.269   ▶       ParticleEmitter  [ParticleEmitter] (x2)  -  Edit
+  10:51:32.269        Weld  [ManualWeld]  -  Edit
+  10:51:32.269      CorruptedPart  [Part]  -  Edit
+  10:51:32.269        Mesh  [SpecialMesh]  -  Edit
+  10:51:32.269   ▶       ParticleEmitter  [ParticleEmitter] (x2)  -  Edit
+  10:51:32.269        Weld  [ManualWeld]  -  Edit
+  10:51:32.269      CorruptedPart  [Part]  -  Edit
+  10:51:32.269        Mesh  [BlockMesh]  -  Edit
+  10:51:32.269   ▶       ParticleEmitter  [ParticleEmitter] (x2)  -  Edit
+  10:51:32.270        Weld  [ManualWeld]  -  Edit
+  10:51:32.270    NukeRocketLauncher  [Tool]  -  Edit
+  10:51:32.270      MouseIcon  [LocalScript]  -  Edit
+  10:51:32.270      Server  [Script]  -  Edit
+  10:51:32.270        Swoosh  [Sound]  -  Edit
+  10:51:32.270        Rocket  [Script]  -  Edit
+  10:51:32.270          Effects  [Folder]  -  Edit
+  10:51:32.270            Effect  [ParticleEmitter]  -  Edit
+  10:51:32.270            Smoke  [ParticleEmitter]  -  Edit
+  10:51:32.270            Smoke2  [ParticleEmitter]  -  Edit
+  10:51:32.270        Boom  [Sound]  -  Edit
+  10:51:32.270        TrailEffect  [Folder]  -  Edit
+  10:51:32.270          TrailEffect  [ParticleEmitter]  -  Edit
+  10:51:32.270      Client  [LocalScript]  -  Edit
+  10:51:32.270      qPerfectionWeld  [Script]  -  Edit
+  10:51:32.270      MouseLoc  [RemoteFunction]  -  Edit
+  10:51:32.270      LauncherModel  [Model]  -  Edit
+  10:51:32.270        Foregrip  [Model]  -  Edit
+  10:51:32.270   ▶         Part  [Part] (x4)  -  Edit
+  10:51:32.271        Scope  [Model]  -  Edit
+  10:51:32.271   ▶         Part  [Part] (x2)  -  Edit
+  10:51:32.271          Hole  [Part]  -  Edit
+  10:51:32.271          Part  [Part]  -  Edit
+  10:51:32.271          Wedge  [WedgePart]  -  Edit
+  10:51:32.271   ▶         Part  [Part] (x3)  -  Edit
+  10:51:32.271          Wedge  [WedgePart]  -  Edit
+  10:51:32.271          Part  [Part]  -  Edit
+  10:51:32.271          Hole  [Part]  -  Edit
+  10:51:32.271        Body  [Model]  -  Edit
+  10:51:32.271   ▶         Part  [Part] (x3)  -  Edit
+  10:51:32.271   ▶         Hole  [Part] (x2)  -  Edit
+  10:51:32.271        Model  [Model]  -  Edit
+  10:51:32.271          Part  [Part]  -  Edit
+  10:51:32.271   ▶         Wedge  [WedgePart] (x2)  -  Edit
+  10:51:32.271      LauncherModel  [Model]  -  Edit
+  10:51:32.271        Foregrip  [Model]  -  Edit
+  10:51:32.272   ▶         Part  [Part] (x4)  -  Edit
+  10:51:32.272        Scope  [Model]  -  Edit
+  10:51:32.272   ▶         Part  [Part] (x2)  -  Edit
+  10:51:32.272          Hole  [Part]  -  Edit
+  10:51:32.272          Part  [Part]  -  Edit
+  10:51:32.272          Wedge  [WedgePart]  -  Edit
+  10:51:32.272   ▶         Part  [Part] (x3)  -  Edit
+  10:51:32.272          Wedge  [WedgePart]  -  Edit
+  10:51:32.273          Part  [Part]  -  Edit
+  10:51:32.273          Hole  [Part]  -  Edit
+  10:51:32.273        Body  [Model]  -  Edit
+  10:51:32.273   ▶         Part  [Part] (x3)  -  Edit
+  10:51:32.273   ▶         Hole  [Part] (x2)  -  Edit
+  10:51:32.273        Model  [Model]  -  Edit
+  10:51:32.273          Part  [Part]  -  Edit
+  10:51:32.273   ▶         Wedge  [WedgePart] (x2)  -  Edit
+  10:51:32.274      LauncherModel  [Model]  -  Edit
+  10:51:32.274        Foregrip  [Model]  -  Edit
+  10:51:32.274   ▶         Part  [Part] (x4)  -  Edit
+  10:51:32.274        Scope  [Model]  -  Edit
+  10:51:32.274   ▶         Part  [Part] (x2)  -  Edit
+  10:51:32.275          Hole  [Part]  -  Edit
+  10:51:32.275          Part  [Part]  -  Edit
+  10:51:32.275          Wedge  [WedgePart]  -  Edit
+  10:51:32.275   ▶         Part  [Part] (x3)  -  Edit
+  10:51:32.275          Wedge  [WedgePart]  -  Edit
+  10:51:32.275          Part  [Part]  -  Edit
+  10:51:32.275          Hole  [Part]  -  Edit
+  10:51:32.275        Body  [Model]  -  Edit
+  10:51:32.275   ▶         Part  [Part] (x3)  -  Edit
+  10:51:32.275   ▶         Hole  [Part] (x2)  -  Edit
+  10:51:32.276        Model  [Model]  -  Edit
+  10:51:32.276          Part  [Part]  -  Edit
+  10:51:32.276   ▶         Wedge  [WedgePart] (x2)  -  Edit
+  10:51:32.276      LauncherModel  [Model]  -  Edit
+  10:51:32.276        Foregrip  [Model]  -  Edit
+  10:51:32.276   ▶         Part  [Part] (x4)  -  Edit
+  10:51:32.276        Scope  [Model]  -  Edit
+  10:51:32.276   ▶         Part  [Part] (x2)  -  Edit
+  10:51:32.276          Hole  [Part]  -  Edit
+  10:51:32.276          Part  [Part]  -  Edit
+  10:51:32.276          Wedge  [WedgePart]  -  Edit
+  10:51:32.276   ▶         Part  [Part] (x3)  -  Edit
+  10:51:32.276          Wedge  [WedgePart]  -  Edit
+  10:51:32.276          Part  [Part]  -  Edit
+  10:51:32.276          Hole  [Part]  -  Edit
+  10:51:32.276        Body  [Model]  -  Edit
+  10:51:32.277   ▶         Part  [Part] (x3)  -  Edit
+  10:51:32.277          Hole  [Part]  -  Edit
+  10:51:32.277            Weld  [Weld]  -  Edit
+  10:51:32.277          Hole  [Part]  -  Edit
+  10:51:32.277        Model  [Model]  -  Edit
+  10:51:32.277          Part  [Part]  -  Edit
+  10:51:32.277   ▶           Weld  [Weld] (x2)  -  Edit
+  10:51:32.277          Wedge  [WedgePart]  -  Edit
+  10:51:32.277            Weld  [Weld]  -  Edit
+  10:51:32.277          Wedge  [WedgePart]  -  Edit
+  10:51:32.277            Weld  [Weld]  -  Edit
+  10:51:32.277      LauncherModel  [Model]  -  Edit
+  10:51:32.277        Foregrip  [Model]  -  Edit
+  10:51:32.277   ▶         Part  [Part] (x4)  -  Edit
+  10:51:32.277        Scope  [Model]  -  Edit
+  10:51:32.277          Part  [Part]  -  Edit
+  10:51:32.277            Weld  [Weld]  -  Edit
+  10:51:32.277          Part  [Part]  -  Edit
+  10:51:32.277          Hole  [Part]  -  Edit
+  10:51:32.277          Part  [Part]  -  Edit
+  10:51:32.278          Wedge  [WedgePart]  -  Edit
+  10:51:32.278            Weld  [Weld]  -  Edit
+  10:51:32.278   ▶         Part  [Part] (x3)  -  Edit
+  10:51:32.278          Wedge  [WedgePart]  -  Edit
+  10:51:32.278          Part  [Part]  -  Edit
+  10:51:32.278          Hole  [Part]  -  Edit
+  10:51:32.278        Body  [Model]  -  Edit
+  10:51:32.278   ▶         Part  [Part] (x3)  -  Edit
+  10:51:32.278   ▶         Hole  [Part] (x2)  -  Edit
+  10:51:32.278            Weld  [Weld]  -  Edit
+  10:51:32.278        Model  [Model]  -  Edit
+  10:51:32.278          Part  [Part]  -  Edit
+  10:51:32.278            Weld  [Weld]  -  Edit
+  10:51:32.278          Wedge  [WedgePart]  -  Edit
+  10:51:32.278            Weld  [Weld]  -  Edit
+  10:51:32.278          Wedge  [WedgePart]  -  Edit
+  10:51:32.278      LauncherModel  [Model]  -  Edit
+  10:51:32.279        Foregrip  [Model]  -  Edit
+  10:51:32.279   ▶         Part  [Part] (x4)  -  Edit
+  10:51:32.279        Scope  [Model]  -  Edit
+  10:51:32.279   ▶         Part  [Part] (x2)  -  Edit
+  10:51:32.279          Hole  [Part]  -  Edit
+  10:51:32.279          Part  [Part]  -  Edit
+  10:51:32.279          Wedge  [WedgePart]  -  Edit
+  10:51:32.279   ▶         Part  [Part] (x3)  -  Edit
+  10:51:32.279          Wedge  [WedgePart]  -  Edit
+  10:51:32.279          Part  [Part]  -  Edit
+  10:51:32.279          Hole  [Part]  -  Edit
+  10:51:32.279        Body  [Model]  -  Edit
+  10:51:32.279   ▶         Part  [Part] (x3)  -  Edit
+  10:51:32.279          Hole  [Part]  -  Edit
+  10:51:32.279            Weld  [Weld]  -  Edit
+  10:51:32.280          Hole  [Part]  -  Edit
+  10:51:32.280            Weld  [Weld]  -  Edit
+  10:51:32.280        Model  [Model]  -  Edit
+  10:51:32.280          Part  [Part]  -  Edit
+  10:51:32.280   ▶           Weld  [Weld] (x2)  -  Edit
+  10:51:32.280          Wedge  [WedgePart]  -  Edit
+  10:51:32.280            Weld  [Weld]  -  Edit
+  10:51:32.280          Wedge  [WedgePart]  -  Edit
+  10:51:32.280            Weld  [Weld]  -  Edit
+  10:51:32.280      LauncherModel  [Model]  -  Edit
+  10:51:32.280        Foregrip  [Model]  -  Edit
+  10:51:32.280   ▶         Part  [Part] (x4)  -  Edit
+  10:51:32.280        Scope  [Model]  -  Edit
+  10:51:32.280   ▶         Part  [Part] (x2)  -  Edit
+  10:51:32.280          Hole  [Part]  -  Edit
+  10:51:32.280          Part  [Part]  -  Edit
+  10:51:32.281          Wedge  [WedgePart]  -  Edit
+  10:51:32.281   ▶         Part  [Part] (x3)  -  Edit
+  10:51:32.281          Wedge  [WedgePart]  -  Edit
+  10:51:32.281            Weld  [Weld]  -  Edit
+  10:51:32.281          Part  [Part]  -  Edit
+  10:51:32.281          Hole  [Part]  -  Edit
+  10:51:32.281        Body  [Model]  -  Edit
+  10:51:32.282   ▶         Part  [Part] (x3)  -  Edit
+  10:51:32.282   ▶         Hole  [Part] (x2)  -  Edit
+  10:51:32.282        Model  [Model]  -  Edit
+  10:51:32.282          Part  [Part]  -  Edit
+  10:51:32.282   ▶         Wedge  [WedgePart] (x2)  -  Edit
+  10:51:32.282      LauncherModel  [Model]  -  Edit
+  10:51:32.282        Foregrip  [Model]  -  Edit
+  10:51:32.282   ▶         Part  [Part] (x4)  -  Edit
+  10:51:32.282        Scope  [Model]  -  Edit
+  10:51:32.282   ▶         Part  [Part] (x2)  -  Edit
+  10:51:32.282          Hole  [Part]  -  Edit
+  10:51:32.282          Part  [Part]  -  Edit
+  10:51:32.282          Wedge  [WedgePart]  -  Edit
+  10:51:32.282   ▶         Part  [Part] (x3)  -  Edit
+  10:51:32.282          Wedge  [WedgePart]  -  Edit
+  10:51:32.282          Part  [Part]  -  Edit
+  10:51:32.283          Hole  [Part]  -  Edit
+  10:51:32.283        Body  [Model]  -  Edit
+  10:51:32.283   ▶         Part  [Part] (x3)  -  Edit
+  10:51:32.283   ▶         Hole  [Part] (x2)  -  Edit
+  10:51:32.283        Model  [Model]  -  Edit
+  10:51:32.283          Part  [Part]  -  Edit
+  10:51:32.283   ▶         Wedge  [WedgePart] (x2)  -  Edit
+  10:51:32.283      LauncherModel  [Model]  -  Edit
+  10:51:32.283        Foregrip  [Model]  -  Edit
+  10:51:32.283   ▶         Part  [Part] (x4)  -  Edit
+  10:51:32.283        Scope  [Model]  -  Edit
+  10:51:32.283   ▶         Part  [Part] (x2)  -  Edit
+  10:51:32.283          Hole  [Part]  -  Edit
+  10:51:32.283          Part  [Part]  -  Edit
+  10:51:32.283          Wedge  [WedgePart]  -  Edit
+  10:51:32.283   ▶         Part  [Part] (x3)  -  Edit
+  10:51:32.283          Wedge  [WedgePart]  -  Edit
+  10:51:32.283          Part  [Part]  -  Edit
+  10:51:32.284          Hole  [Part]  -  Edit
+  10:51:32.284        Body  [Model]  -  Edit
+  10:51:32.284   ▶         Part  [Part] (x3)  -  Edit
+  10:51:32.284   ▶         Hole  [Part] (x2)  -  Edit
+  10:51:32.284        Model  [Model]  -  Edit
+  10:51:32.284          Part  [Part]  -  Edit
+  10:51:32.284   ▶         Wedge  [WedgePart] (x2)  -  Edit
+  10:51:32.284      LauncherModel  [Model]  -  Edit
+  10:51:32.284        Foregrip  [Model]  -  Edit
+  10:51:32.284   ▶         Part  [Part] (x4)  -  Edit
+  10:51:32.284        Scope  [Model]  -  Edit
+  10:51:32.284   ▶         Part  [Part] (x2)  -  Edit
+  10:51:32.284          Hole  [Part]  -  Edit
+  10:51:32.284          Part  [Part]  -  Edit
+  10:51:32.284          Wedge  [WedgePart]  -  Edit
+  10:51:32.284   ▶         Part  [Part] (x3)  -  Edit
+  10:51:32.285          Wedge  [WedgePart]  -  Edit
+  10:51:32.285          Part  [Part]  -  Edit
+  10:51:32.285          Hole  [Part]  -  Edit
+  10:51:32.285        Body  [Model]  -  Edit
+  10:51:32.285   ▶         Part  [Part] (x3)  -  Edit
+  10:51:32.285          Hole  [Part]  -  Edit
+  10:51:32.285            Weld  [Weld]  -  Edit
+  10:51:32.285          Hole  [Part]  -  Edit
+  10:51:32.285        Model  [Model]  -  Edit
+  10:51:32.285          Part  [Part]  -  Edit
+  10:51:32.285   ▶           Weld  [Weld] (x2)  -  Edit
+  10:51:32.285          Wedge  [WedgePart]  -  Edit
+  10:51:32.285            Weld  [Weld]  -  Edit
+  10:51:32.285          Wedge  [WedgePart]  -  Edit
+  10:51:32.285            Weld  [Weld]  -  Edit
+  10:51:32.285      Fat Man 20 kilotons  [Model]  -  Edit
+  10:51:32.285        Tail  [Model]  -  Edit
+  10:51:32.285   ▶         Part  [Part] (x2)  -  Edit
+  10:51:32.285          Wedge  [WedgePart]  -  Edit
+  10:51:32.285   ▶         Part  [Part] (x3)  -  Edit
+  10:51:32.286   ▶         Wedge  [WedgePart] (x6)  -  Edit
+  10:51:32.286   ▶         Part  [Part] (x3)  -  Edit
+  10:51:32.286          Wedge  [WedgePart]  -  Edit
+  10:51:32.286        Parts  [Model]  -  Edit
+  10:51:32.286          Model  [Model]  -  Edit
+  10:51:32.286            Part  [Part]  -  Edit
+  10:51:32.286              Mesh  [CylinderMesh]  -  Edit
+  10:51:32.286              Snap  [Snap]  -  Edit
+  10:51:32.286            Part  [Part]  -  Edit
+  10:51:32.286              Mesh  [CylinderMesh]  -  Edit
+  10:51:32.286            Part  [Part]  -  Edit
+  10:51:32.286              Mesh  [CylinderMesh]  -  Edit
+  10:51:32.286              Snap  [Snap]  -  Edit
+  10:51:32.286            Part  [Part]  -  Edit
+  10:51:32.287              Mesh  [CylinderMesh]  -  Edit
+  10:51:32.287            Part  [Part]  -  Edit
+  10:51:32.287              Mesh  [CylinderMesh]  -  Edit
+  10:51:32.287            Part  [Part]  -  Edit
+  10:51:32.287              Mesh  [SpecialMesh]  -  Edit
+  10:51:32.287            Part  [Part]  -  Edit
+  10:51:32.287              Mesh  [CylinderMesh]  -  Edit
+  10:51:32.287            Part  [Part]  -  Edit
+  10:51:32.287              Mesh  [SpecialMesh]  -  Edit
+  10:51:32.287            Part  [Part]  -  Edit
+  10:51:32.287              Mesh  [BlockMesh]  -  Edit
+  10:51:32.287            Part  [Part]  -  Edit
+  10:51:32.287              Mesh  [CylinderMesh]  -  Edit
+  10:51:32.287            Part  [Part]  -  Edit
+  10:51:32.287              Mesh  [SpecialMesh]  -  Edit
+  10:51:32.287            Part  [Part]  -  Edit
+  10:51:32.287              Mesh  [SpecialMesh]  -  Edit
+  10:51:32.287          Model  [Model]  -  Edit
+  10:51:32.287            Part  [Part]  -  Edit
+  10:51:32.287              Mesh  [CylinderMesh]  -  Edit
+  10:51:32.287              Snap  [Snap]  -  Edit
+  10:51:32.287            Part  [Part]  -  Edit
+  10:51:32.287              Mesh  [CylinderMesh]  -  Edit
+  10:51:32.287            Part  [Part]  -  Edit
+  10:51:32.287              Mesh  [CylinderMesh]  -  Edit
+  10:51:32.288              Snap  [Snap]  -  Edit
+  10:51:32.288            Part  [Part]  -  Edit
+  10:51:32.288              Mesh  [CylinderMesh]  -  Edit
+  10:51:32.288            Part  [Part]  -  Edit
+  10:51:32.288              Mesh  [CylinderMesh]  -  Edit
+  10:51:32.288            Part  [Part]  -  Edit
+  10:51:32.288              Mesh  [SpecialMesh]  -  Edit
+  10:51:32.288            Part  [Part]  -  Edit
+  10:51:32.288              Mesh  [CylinderMesh]  -  Edit
+  10:51:32.288            Part  [Part]  -  Edit
+  10:51:32.288              Mesh  [SpecialMesh]  -  Edit
+  10:51:32.288            Part  [Part]  -  Edit
+  10:51:32.288              Mesh  [BlockMesh]  -  Edit
+  10:51:32.288            Part  [Part]  -  Edit
+  10:51:32.288              Mesh  [CylinderMesh]  -  Edit
+  10:51:32.288            Part  [Part]  -  Edit
+  10:51:32.288              Mesh  [SpecialMesh]  -  Edit
+  10:51:32.288            Part  [Part]  -  Edit
+  10:51:32.288              Mesh  [SpecialMesh]  -  Edit
+  10:51:32.288          Model  [Model]  -  Edit
+  10:51:32.289            Part  [Part]  -  Edit
+  10:51:32.289              Mesh  [CylinderMesh]  -  Edit
+  10:51:32.289              Snap  [Snap]  -  Edit
+  10:51:32.289            Part  [Part]  -  Edit
+  10:51:32.289              Mesh  [CylinderMesh]  -  Edit
+  10:51:32.289            Part  [Part]  -  Edit
+  10:51:32.289              Mesh  [CylinderMesh]  -  Edit
+  10:51:32.289              Snap  [Snap]  -  Edit
+  10:51:32.289            Part  [Part]  -  Edit
+  10:51:32.289              Mesh  [CylinderMesh]  -  Edit
+  10:51:32.289            Part  [Part]  -  Edit
+  10:51:32.289              Mesh  [CylinderMesh]  -  Edit
+  10:51:32.289            Part  [Part]  -  Edit
+  10:51:32.289              Mesh  [SpecialMesh]  -  Edit
+  10:51:32.289            Part  [Part]  -  Edit
+  10:51:32.289              Mesh  [CylinderMesh]  -  Edit
+  10:51:32.289            Part  [Part]  -  Edit
+  10:51:32.289              Mesh  [SpecialMesh]  -  Edit
+  10:51:32.289            Part  [Part]  -  Edit
+  10:51:32.289              Mesh  [BlockMesh]  -  Edit
+  10:51:32.290            Part  [Part]  -  Edit
+  10:51:32.290              Mesh  [CylinderMesh]  -  Edit
+  10:51:32.290            Part  [Part]  -  Edit
+  10:51:32.290              Mesh  [SpecialMesh]  -  Edit
+  10:51:32.290            Part  [Part]  -  Edit
+  10:51:32.290              Mesh  [SpecialMesh]  -  Edit
+  10:51:32.290          Model  [Model]  -  Edit
+  10:51:32.290            Part  [Part]  -  Edit
+  10:51:32.290              Mesh  [CylinderMesh]  -  Edit
+  10:51:32.290              Snap  [Snap]  -  Edit
+  10:51:32.290            Part  [Part]  -  Edit
+  10:51:32.290              Mesh  [CylinderMesh]  -  Edit
+  10:51:32.290            Part  [Part]  -  Edit
+  10:51:32.290              Mesh  [CylinderMesh]  -  Edit
+  10:51:32.290              Snap  [Snap]  -  Edit
+  10:51:32.290            Part  [Part]  -  Edit
+  10:51:32.290              Mesh  [CylinderMesh]  -  Edit
+  10:51:32.290            Part  [Part]  -  Edit
+  10:51:32.291              Mesh  [CylinderMesh]  -  Edit
+  10:51:32.291            Part  [Part]  -  Edit
+  10:51:32.291              Mesh  [SpecialMesh]  -  Edit
+  10:51:32.291            Part  [Part]  -  Edit
+  10:51:32.291              Mesh  [CylinderMesh]  -  Edit
+  10:51:32.291            Part  [Part]  -  Edit
+  10:51:32.291              Mesh  [SpecialMesh]  -  Edit
+  10:51:32.291            Part  [Part]  -  Edit
+  10:51:32.291              Mesh  [BlockMesh]  -  Edit
+  10:51:32.291            Part  [Part]  -  Edit
+  10:51:32.291              Mesh  [CylinderMesh]  -  Edit
+  10:51:32.291            Part  [Part]  -  Edit
+  10:51:32.291              Mesh  [SpecialMesh]  -  Edit
+  10:51:32.291            Part  [Part]  -  Edit
+  10:51:32.291              Mesh  [SpecialMesh]  -  Edit
+  10:51:32.291        Paint  [Model]  -  Edit
+  10:51:32.291   ▶         Part  [Part] (x3)  -  Edit
+  10:51:32.291            Mesh  [CylinderMesh]  -  Edit
+  10:51:32.291   ▶         Part  [Part] (x2)  -  Edit
+  10:51:32.292            Mesh  [CylinderMesh]  -  Edit
+  10:51:32.292          Part  [Part]  -  Edit
+  10:51:32.292            Mesh  [CylinderMesh]  -  Edit
+  10:51:32.292   ▶         Part  [Part] (x2)  -  Edit
+  10:51:32.292            Mesh  [CylinderMesh]  -  Edit
+  10:51:32.292          Part  [Part]  -  Edit
+  10:51:32.292            Mesh  [CylinderMesh]  -  Edit
+  10:51:32.292   ▶         Part  [Part] (x4)  -  Edit
+  10:51:32.292            Mesh  [CylinderMesh]  -  Edit
+  10:51:32.292          Part  [Part]  -  Edit
+  10:51:32.292            Mesh  [CylinderMesh]  -  Edit
+  10:51:32.292          Part  [Part]  -  Edit
+  10:51:32.292            Mesh  [CylinderMesh]  -  Edit
+  10:51:32.292          Part  [Part]  -  Edit
+  10:51:32.292            Mesh  [CylinderMesh]  -  Edit
+  10:51:32.292   ▶         Part  [Part] (x3)  -  Edit
+  10:51:32.292            Mesh  [CylinderMesh]  -  Edit
+  10:51:32.292          Part  [Part]  -  Edit
+  10:51:32.292            Mesh  [CylinderMesh]  -  Edit
+  10:51:32.293   ▶         Part  [Part] (x10)  -  Edit
+  10:51:32.293            Mesh  [CylinderMesh]  -  Edit
+  10:51:32.293   ▶         Part  [Part] (x5)  -  Edit
+  10:51:32.293            Mesh  [CylinderMesh]  -  Edit
+  10:51:32.293          Part  [Part]  -  Edit
+  10:51:32.293            Mesh  [CylinderMesh]  -  Edit
+  10:51:32.293          Part  [Part]  -  Edit
+  10:51:32.293            Mesh  [CylinderMesh]  -  Edit
+  10:51:32.293   ▶         Part  [Part] (x2)  -  Edit
+  10:51:32.294            Mesh  [CylinderMesh]  -  Edit
+  10:51:32.294          Part  [Part]  -  Edit
+  10:51:32.294        Screws  [Model]  -  Edit
+  10:51:32.294          Part  [Part]  -  Edit
+  10:51:32.294            Mesh  [CylinderMesh]  -  Edit
+  10:51:32.294          Part  [Part]  -  Edit
+  10:51:32.294            Mesh  [CylinderMesh]  -  Edit
+  10:51:32.294          Part  [Part]  -  Edit
+  10:51:32.294            Mesh  [CylinderMesh]  -  Edit
+  10:51:32.294          Part  [Part]  -  Edit
+  10:51:32.294            Mesh  [CylinderMesh]  -  Edit
+  10:51:32.294          Part  [Part]  -  Edit
+  10:51:32.294            Mesh  [CylinderMesh]  -  Edit
+  10:51:32.294          Part  [Part]  -  Edit
+  10:51:32.294            Mesh  [CylinderMesh]  -  Edit
+  10:51:32.294          Part  [Part]  -  Edit
+  10:51:32.294            Mesh  [CylinderMesh]  -  Edit
+  10:51:32.294          Part  [Part]  -  Edit
+  10:51:32.294            Mesh  [CylinderMesh]  -  Edit
+  10:51:32.294          Part  [Part]  -  Edit
+  10:51:32.294            Mesh  [CylinderMesh]  -  Edit
+  10:51:32.295          Part  [Part]  -  Edit
+  10:51:32.295            Mesh  [CylinderMesh]  -  Edit
+  10:51:32.295          Part  [Part]  -  Edit
+  10:51:32.295            Mesh  [CylinderMesh]  -  Edit
+  10:51:32.295          Part  [Part]  -  Edit
+  10:51:32.295            Mesh  [CylinderMesh]  -  Edit
+  10:51:32.295          Part  [Part]  -  Edit
+  10:51:32.295            Mesh  [CylinderMesh]  -  Edit
+  10:51:32.295          Part  [Part]  -  Edit
+  10:51:32.295            Mesh  [CylinderMesh]  -  Edit
+  10:51:32.295          Part  [Part]  -  Edit
+  10:51:32.295            Mesh  [CylinderMesh]  -  Edit
+  10:51:32.295          Part  [Part]  -  Edit
+  10:51:32.295            Mesh  [CylinderMesh]  -  Edit
+  10:51:32.295          Part  [Part]  -  Edit
+  10:51:32.295            Mesh  [CylinderMesh]  -  Edit
+  10:51:32.295          Part  [Part]  -  Edit
+  10:51:32.295            Mesh  [CylinderMesh]  -  Edit
+  10:51:32.295          Part  [Part]  -  Edit
+  10:51:32.295            Mesh  [CylinderMesh]  -  Edit
+  10:51:32.295          Part  [Part]  -  Edit
+  10:51:32.295            Mesh  [CylinderMesh]  -  Edit
+  10:51:32.296          Part  [Part]  -  Edit
+  10:51:32.296            Mesh  [CylinderMesh]  -  Edit
+  10:51:32.296          Part  [Part]  -  Edit
+  10:51:32.296            Mesh  [CylinderMesh]  -  Edit
+  10:51:32.296          Part  [Part]  -  Edit
+  10:51:32.296            Mesh  [CylinderMesh]  -  Edit
+  10:51:32.296          Part  [Part]  -  Edit
+  10:51:32.296            Mesh  [CylinderMesh]  -  Edit
+  10:51:32.296        Lamps  [Model]  -  Edit
+  10:51:32.296          Part  [Part]  -  Edit
+  10:51:32.296            Mesh  [CylinderMesh]  -  Edit
+  10:51:32.296          Part  [Part]  -  Edit
+  10:51:32.296            Mesh  [SpecialMesh]  -  Edit
+  10:51:32.296            SpotLight  [SpotLight]  -  Edit
+  10:51:32.296          Part  [Part]  -  Edit
+  10:51:32.296            Mesh  [CylinderMesh]  -  Edit
+  10:51:32.296          Part  [Part]  -  Edit
+  10:51:32.296            Mesh  [SpecialMesh]  -  Edit
+  10:51:32.296            SpotLight  [SpotLight]  -  Edit
+  10:51:32.296          Part  [Part]  -  Edit
+  10:51:32.296            Mesh  [CylinderMesh]  -  Edit
+  10:51:32.297          Part  [Part]  -  Edit
+  10:51:32.297            Mesh  [SpecialMesh]  -  Edit
+  10:51:32.297            SpotLight  [SpotLight]  -  Edit
+  10:51:32.297          Part  [Part]  -  Edit
+  10:51:32.297            Mesh  [SpecialMesh]  -  Edit
+  10:51:32.297            SpotLight  [SpotLight]  -  Edit
+  10:51:32.297          Part  [Part]  -  Edit
+  10:51:32.297            Mesh  [CylinderMesh]  -  Edit
+  10:51:32.297        Shell  [Model]  -  Edit
+  10:51:32.297          head  [UnionOperation]  -  Edit
+  10:51:32.297          Part  [Part]  -  Edit
+  10:51:32.297            Mesh  [CylinderMesh]  -  Edit
+  10:51:32.297          Part  [Part]  -  Edit
+  10:51:32.297            Mesh  [SpecialMesh]  -  Edit
+  10:51:32.297      Handle  [Part]  -  Edit
+  10:51:32.297        FireSound  [Sound]  -  Edit
+  10:51:32.297        Ready  [Sound]  -  Edit
+  10:51:32.297        Mesh  [SpecialMesh]  -  Edit
+  10:51:32.297    HyperlaserGun  [Tool]  -  Edit
+  10:51:32.297      ToolScript  [LocalScript]  -  Edit
+  10:51:32.298      MouseIcon  [LocalScript]  -  Edit
+  10:51:32.298      Script  [Script]  -  Edit
+  10:51:32.298      Handle  [Part]  -  Edit
+  10:51:32.298        Fire  [Sound]  -  Edit
+  10:51:32.298        Reload  [Sound]  -  Edit
+  10:51:32.298        HitFade  [Sound]  -  Edit
+  10:51:32.298        Mesh  [SpecialMesh]  -  Edit
+  10:51:32.298        PointLight  [PointLight]  -  Edit
+  10:51:32.298  ======== StarterPlayer.StarterGear ========  -  Edit
+  10:51:32.298  (нет StarterGear)  -  Edit
+  10:51:32.298  ======== ReplicatedStorage (верхний уровень) ========  -  Edit
+  10:51:32.298  MemoryEvent  [RemoteEvent]  -  Edit
+  10:51:32.298  CreateSnake  [RemoteEvent]  -  Edit
+  10:51:32.298  UpdateSnake  [RemoteEvent]  -  Edit
+  10:51:32.298  SnakeAssets  [Folder]  -  Edit
+  10:51:32.298  Shared  [Folder]  -  Edit
+  10:51:32.298  StartCinematicEvent  [RemoteEvent]  -  Edit
+  10:52:16.899  Kicked from Live Scripting Session: Script was deleted  -  Studio

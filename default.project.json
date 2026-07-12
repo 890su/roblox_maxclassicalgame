@@ -1,0 +1,143 @@
+{
+  "name": "ShadowOfTheHammer",
+  "tree": {
+    "$className": "DataModel",
+    "ReplicatedStorage": {
+      "$ignoreUnknownInstances": true,
+      "Shared": {
+        "$path": "src/shared"
+      }
+    },
+    "ServerScriptService": {
+      "$ignoreUnknownInstances": true,
+      "$path": "src/server"
+    },
+    "StarterPlayer": {
+      "$properties": {
+        "CameraMaxZoomDistance": 10,
+        "CameraMinZoomDistance": 10,
+        "CameraMode": "Classic",
+        "DevCameraOcclusionMode": "Zoom",
+        "HealthDisplayDistance": 100,
+        "NameDisplayDistance": 100
+      },
+      "StarterPlayerScripts": {
+        "$path": "src/client"
+      },
+      "StarterCharacterScripts": {
+        "$ignoreUnknownInstances": true,
+        "$path": "src/character"
+      }
+    },
+    "StarterGui": {
+      "$ignoreUnknownInstances": true,
+      "$path": "src/gui"
+    },
+    "ReplicatedFirst": {
+      "$ignoreUnknownInstances": true,
+      "$path": "src/loading"
+    },
+    "ServerStorage": {
+      "$ignoreUnknownInstances": true,
+      "Assets": {
+        "$ignoreUnknownInstances": true,
+        "$path": "src/assets"
+      }
+    },
+    "Workspace": {
+      "$ignoreUnknownInstances": true,
+      "$properties": {
+        "FilteringEnabled": true,
+        "Gravity": 196.2,
+        "StreamingEnabled": false,
+        "FallenPartsDestroyHeight": -500
+      },
+      "Zones": {
+        "$className": "Folder",
+        "$ignoreUnknownInstances": true,
+        "Village": {
+          "$className": "Folder",
+          "$ignoreUnknownInstances": true
+        },
+        "Outskirts": {
+          "$className": "Folder",
+          "$ignoreUnknownInstances": true
+        },
+        "Forest": {
+          "$className": "Folder",
+          "$ignoreUnknownInstances": true
+        },
+        "Swamp": {
+          "$className": "Folder",
+          "$ignoreUnknownInstances": true
+        },
+        "Tomb": {
+          "$className": "Folder",
+          "$ignoreUnknownInstances": true
+        },
+        "ArtifactHall": {
+          "$className": "Folder",
+          "$ignoreUnknownInstances": true
+        }
+      },
+      "NPCs": {
+        "$className": "Folder",
+        "$ignoreUnknownInstances": true
+      },
+      "Triggers": {
+        "$className": "Folder",
+        "$ignoreUnknownInstances": true
+      },
+      "SpawnPoints": {
+        "$className": "Folder",
+        "$ignoreUnknownInstances": true
+      }
+    },
+    "Lighting": {
+      "$ignoreUnknownInstances": true,
+      "$properties": {
+        "Ambient": [
+          0.18,
+          0.16,
+          0.22
+        ],
+        "Brightness": 1.5,
+        "ClockTime": 14,
+        "GlobalShadows": true,
+        "Outlines": false,
+        "Technology": "ShadowMap",
+        "FogEnd": 1000,
+        "FogStart": 200,
+        "FogColor": [
+          0.6,
+          0.6,
+          0.65
+        ],
+        "GeographicLatitude": 45,
+        "EnvironmentDiffuseScale": 0.5,
+        "EnvironmentSpecularScale": 0.5
+      }
+    },
+    "SoundService": {
+      "$ignoreUnknownInstances": true,
+      "$properties": {
+        "RespectFilteringEnabled": true
+      }
+    },
+    "Chat": {
+      "$ignoreUnknownInstances": true
+    },
+    "LocalizationService": {
+      "$ignoreUnknownInstances": true
+    },
+    "TestService": {
+      "$ignoreUnknownInstances": true
+    },
+    "Teams": {
+      "$ignoreUnknownInstances": true
+    },
+    "TextChatService": {
+      "$ignoreUnknownInstances": true
+    }
+  }
+}

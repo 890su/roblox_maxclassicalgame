@@ -1,0 +1,17 @@
+# Project place file
+/classical_game.rbxlx
+
+# Roblox Studio lock files
+/*.rbxlx.lock
+/*.rbxl.lock
+
+sourcemap.json
+*.rbxl
+*.rbxlx
+
+*.log
+
+
+.DS_Store
+
+.vscode/settings.json

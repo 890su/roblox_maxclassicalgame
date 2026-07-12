@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Тень Молота — Shadow of the Hammer</title>
+  <meta name="description" content="Однопользовательская Roblox RPG / Adventure с тремя концовками и прогрессирующей сюжетной петлёй.">
+  <style>
+    :root {
+      --bg-deep: #0c0a10;
+      --bg-card: #16131f;
+      --bg-card-hover: #1e1a2a;
+      --gold: #e8c547;
+      --gold-dim: #a68b2a;
+      --purple: #9b7ede;
+      --purple-dim: #6b52a8;
+      --text: #e4e0ec;
+      --text-muted: #9a94a8;
+      --accent-red: #c44b4b;
+      --border: rgba(155, 126, 222, 0.2);
+      --glow: rgba(232, 197, 71, 0.15);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+      background: var(--bg-deep);
+      color: var(--text);
+      line-height: 1.65;
+      min-height: 100vh;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 50% at 50% -10%, rgba(107, 82, 168, 0.35), transparent),
+        radial-gradient(ellipse 60% 40% at 100% 100%, rgba(196, 75, 75, 0.08), transparent);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .wrap {
+      position: relative;
+      z-index: 1;
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 0 1.25rem 4rem;
+    }
+
+    /* ── Hero ── */
+    header.hero {
+      text-align: center;
+      padding: 4.5rem 0 3rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .badge {
+      display: inline-block;
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--purple);
+      border: 1px solid var(--border);
+      padding: 0.35rem 0.9rem;
+      border-radius: 999px;
+      margin-bottom: 1.25rem;
+    }
+
+    h1 {
+      font-size: clamp(2.2rem, 6vw, 3.4rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      background: linear-gradient(135deg, var(--gold) 0%, #fff 45%, var(--purple) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .subtitle-en {
+      font-size: 1rem;
+      color: var(--text-muted);
+      margin-top: 0.5rem;
+      font-weight: 400;
+    }
+
+    .tagline {
+      max-width: 36rem;
+      margin: 1.75rem auto 0;
+      font-size: 1.1rem;
+      color: var(--text-muted);
+    }
+
+    .meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.75rem;
+      margin-top: 2rem;
+    }
+
+    .meta-chip {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.45rem 0.9rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .meta-chip strong {
+      color: var(--gold);
+      font-weight: 600;
+    }
+
+    /* ── Nav ── */
+    nav.toc {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 1.5rem 0;
+      position: sticky;
+      top: 0;
+      background: rgba(12, 10, 16, 0.85);
+      backdrop-filter: blur(10px);
+      z-index: 10;
+      border-bottom: 1px solid var(--border);
+      margin: 0 -1.25rem;
+      padding-left: 1.25rem;
+      padding-right: 1.25rem;
+    }
+
+    nav.toc a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.82rem;
+      padding: 0.4rem 0.75rem;
+      border-radius: 6px;
+      transition: color 0.2s, background 0.2s;
+    }
+
+    nav.toc a:hover {
+      color: var(--gold);
+      background: var(--glow);
+    }
+
+    /* ── Sections ── */
+    section {
+      padding: 2.75rem 0 0;
+    }
+
+    h2 {
+      font-size: 1.5rem;
+      color: var(--gold);
+      margin-bottom: 1rem;
+      font-weight: 600;
+    }
+
+    h2::after {
+      content: "";
+      display: block;
+      width: 3rem;
+      height: 2px;
+      background: linear-gradient(90deg, var(--gold), transparent);
+      margin-top: 0.5rem;
+    }
+
+    p {
+      margin-bottom: 1rem;
+      color: var(--text-muted);
+    }
+
+    p.lead {
+      font-size: 1.05rem;
+      color: var(--text);
+    }
+
+    /* ── Cards grid ── */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1rem;
+      margin-top: 1.25rem;
+    }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.25rem 1.35rem;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .card:hover {
+      border-color: rgba(155, 126, 222, 0.45);
+      transform: translateY(-2px);
+    }
+
+    .card h3 {
+      font-size: 1rem;
+      color: var(--text);
+      margin-bottom: 0.4rem;
+    }
+
+    .card p {
+      font-size: 0.9rem;
+      margin: 0;
+    }
+
+    .card .icon {
+      font-size: 1.5rem;
+      margin-bottom: 0.6rem;
+      display: block;
+    }
+
+    /* ── Journey timeline ── */
+    .timeline {
+      list-style: none;
+      margin-top: 1.25rem;
+      counter-reset: step;
+    }
+
+    .timeline li {
+      position: relative;
+      padding: 0 0 1.5rem 2.75rem;
+      counter-increment: step;
+    }
+
+    .timeline li::before {
+      content: counter(step);
+      position: absolute;
+      left: 0;
+      top: 0.1rem;
+      width: 1.75rem;
+      height: 1.75rem;
+      border-radius: 50%;
+      background: var(--bg-card);
+      border: 1px solid var(--gold-dim);
+      color: var(--gold);
+      font-size: 0.75rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .timeline li:not(:last-child)::after {
+      content: "";
+      position: absolute;
+      left: 0.85rem;
+      top: 2rem;
+      bottom: 0;
+      width: 1px;
+      background: var(--border);
+    }
+
+    .timeline li strong {
+      color: var(--text);
+      display: block;
+      margin-bottom: 0.2rem;
+    }
+
+    .timeline li span {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    /* ── Endings ── */
+    .endings {
+      display: grid;
+      gap: 1rem;
+      margin-top: 1.25rem;
+    }
+
+    .ending {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.25rem 1.5rem;
+      border-left: 3px solid var(--purple-dim);
+    }
+
+    .ending:nth-child(1) { border-left-color: var(--accent-red); }
+    .ending:nth-child(2) { border-left-color: var(--gold); }
+    .ending:nth-child(3) { border-left-color: var(--purple); }
+
+    .ending-num {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      margin-bottom: 0.25rem;
+    }
+
+    .ending h3 {
+      font-size: 1.1rem;
+      color: var(--text);
+      margin-bottom: 0.35rem;
+    }
+
+    .ending .condition {
+      font-size: 0.82rem;
+      color: var(--purple);
+      margin-bottom: 0.5rem;
+    }
+
+    .ending p {
+      font-size: 0.9rem;
+      margin: 0;
+    }
+
+    /* ── Characters ── */
+    .chars {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1rem;
+      margin-top: 1.25rem;
+    }
+
+    .char-name {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--gold);
+      margin-bottom: 0.35rem;
+    }
+
+    .char-role {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--purple);
+      margin-bottom: 0.5rem;
+    }
+
+    /* ── Features ── */
+    .features {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    .feature-tag {
+      background: rgba(155, 126, 222, 0.12);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-size: 0.82rem;
+      padding: 0.35rem 0.75rem;
+      border-radius: 6px;
+    }
+
+    /* ── Footer ── */
+    footer {
+      margin-top: 3.5rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    footer a {
+      color: var(--purple);
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    .hammer {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+      filter: drop-shadow(0 0 12px var(--glow));
+    }
+
+    @media (max-width: 600px) {
+      header.hero { padding-top: 3rem; }
+      nav.toc { justify-content: flex-start; overflow-x: auto; flex-wrap: nowrap; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="hero">
+      <div class="hammer" aria-hidden="true">🔨</div>
+      <span class="badge">Roblox · RPG / Adventure</span>
+      <h1>Тень Молота</h1>
+      <p class="subtitle-en">Shadow of the Hammer</p>
+      <p class="tagline">
+        Однопользовательское приключение: деревня, тёмный лес, ядовитое болото,
+        древняя гробница и легендарный артефакт — Ban Hammer.
+        Три концовки. Одна история. Разные решения.
+      </p>
+      <div class="meta-row">
+        <span class="meta-chip"><strong>Жанр</strong> RPG / Adventure</span>
+        <span class="meta-chip"><strong>Игроков</strong> 1</span>
+        <span class="meta-chip"><strong>Концовок</strong> 3</span>
+        <span class="meta-chip"><strong>Платформа</strong> Roblox</span>
+      </div>
+    </header>
+
+    <nav class="toc" aria-label="Содержание">
+      <a href="#about">Об игре</a>
+      <a href="#story">Сюжет</a>
+      <a href="#world">Мир</a>
+      <a href="#characters">Персонажи</a>
+      <a href="#endings">Концовки</a>
+      <a href="#features">Механики</a>
+    </nav>
+
+    <section id="about">
+      <h2>Об игре</h2>
+      <p class="lead">
+        Ты — молодой герой в деревне, окружённой волками. Старейшина даёт тебе меч
+        и поручает очистить окрестности. Но за охотой скрывается нечто большее:
+        смерть деда, тайная карта и путь к древнему артефакту.
+      </p>
+      <p>
+        На этом пути тебя сопровождает загадочный <strong style="color: var(--text)">Dou Dzouh</strong> —
+        помощник, которому, кажется, можно доверять. Или нет?
+        Каждое новое прохождение открывает новые детали истории и другой финал.
+      </p>
+    </section>
+
+    <section id="story">
+      <h2>Сюжетное путешествие</h2>
+      <ol class="timeline">
+        <li>
+          <strong>Деревня</strong>
+          <span>Старейшина просит избавиться от волков и вручает стартовый меч.</span>
+        </li>
+        <li>
+          <strong>Охота</strong>
+          <span>Восемь волков в окрестностях. Опасность растёт с каждым шагом.</span>
+        </li>
+        <li>
+          <strong>Неожиданный союзник</strong>
+          <span>Кат-сцена: Dou Dzouh спасает героя от вожака стаи.</span>
+        </li>
+        <li>
+          <strong>Плохие новости</strong>
+          <span>Смерть деда. Письмо. Дом, полный тайн.</span>
+        </li>
+        <li>
+          <strong>Карта деда</strong>
+          <span>Секретная карта указывает путь к гробнице и артефакту.</span>
+        </li>
+        <li>
+          <strong>Тёмный лес</strong>
+          <span>Dou Dzouh ведёт к болоту — только вместе можно пройти дальше.</span>
+        </li>
+        <li>
+          <strong>Ядовитое болото</strong>
+          <span>Туман убивает одного. Следуй за проводником строго по кочкам.</span>
+        </li>
+        <li>
+          <strong>Страж ворот</strong>
+          <span>King Hydra Blaster охраняет руины. Победи в бою — или обруши ветряк.</span>
+        </li>
+        <li>
+          <strong>Лабиринт гробницы</strong>
+          <span>Телепорты, фонарь, древний голем — путь к залу артефакта.</span>
+        </li>
+        <li>
+          <strong>Ban Hammer</strong>
+          <span>Артефакт найден. Dou Dzouh просит передать ему молот. Что ты выберешь?</span>
+        </li>
+      </ol>
+    </section>
+
+    <section id="world">
+      <h2>Локации</h2>
+      <div class="grid-2">
+        <article class="card">
+          <span class="icon">🏘</span>
+          <h3>Деревня</h3>
+          <p>Стартовая зона. Старейшина, дом деда, первые квесты и знакомство с миром.</p>
+        </article>
+        <article class="card">
+          <span class="icon">🐺</span>
+          <h3>Окрестности</h3>
+          <p>Территория волков. Первая серьёзная проверка боевых навыков.</p>
+        </article>
+        <article class="card">
+          <span class="icon">🌲</span>
+          <h3>Тёмный лес</h3>
+          <p>Переход к болоту в сопровождении Dou Dzouh.</p>
+        </article>
+        <article class="card">
+          <span class="icon">🌫</span>
+          <h3>Ядовитое болото</h3>
+          <p>Кочки, смертельный туман, проводник обязателен.</p>
+        </article>
+        <article class="card">
+          <span class="icon">🐉</span>
+          <h3>Руины гидры</h3>
+          <p>Арена King Hydra Blaster и головоломка с ветряком.</p>
+        </article>
+        <article class="card">
+          <span class="icon">⚰</span>
+          <h3>Гробница</h3>
+          <p>Лабиринт, телепорты, освещение и финальный зал с Ban Hammer.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="characters">
+      <h2>Персонажи</h2>
+      <div class="chars">
+        <article class="card">
+          <div class="char-role">Наставник</div>
+          <div class="char-name">Старейшина</div>
+          <p>Даёт первый квест, хранит секреты деревни и вести о судьбе деда героя.</p>
+        </article>
+        <article class="card">
+          <div class="char-role">Спутник · ?</div>
+          <div class="char-name">Dou Dzouh</div>
+          <p>Спасает от волка, ведёт через лес и болото, просит Ban Hammer в финале. Его истинные намерения раскрываются не сразу.</p>
+        </article>
+        <article class="card">
+          <div class="char-role">Герой</div>
+          <div class="char-name">Ты</div>
+          <p>Молодой воин с мечом деда. С каждым прохождением помнишь больше — и можешь изменить исход.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="endings">
+      <h2>Три концовки</h2>
+      <p>Прогресс сохраняется между прохождениями. Чем больше раз ты проходишь игру, тем глубже раскрывается правда.</p>
+      <div class="endings">
+        <article class="ending">
+          <div class="ending-num">Концовка 1</div>
+          <h3>Цена доверия</h3>
+          <p class="condition">Первое прохождение</p>
+          <p>Dou Dzouh предаёт в финале и забирает Ban Hammer. Доверие оборачивается поражением.</p>
+        </article>
+        <article class="ending">
+          <div class="ending-num">Концовка 2</div>
+          <h3>Прозрение</h3>
+          <p class="condition">После концовки 1</p>
+          <p>Герой помнит прошлое и даёт отпор. Сражение с тем, кому больше нельзя верить.</p>
+        </article>
+        <article class="ending">
+          <div class="ending-num">Концовка 3</div>
+          <h3>Ускользающее зло</h3>
+          <p class="condition">После концовки 2 · секрет открывается не сразу</p>
+          <p>Раскрывается правда о смерти деда. Зло ускользает — мир остаётся под угрозой. Задел на продолжение.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="features">
+      <h2>Игровые механики</h2>
+      <p class="lead">Сюжет, бой, головоломки и исследование — в одном приключении.</p>
+      <div class="features">
+        <span class="feature-tag">Квестовая цепочка</span>
+        <span class="feature-tag">Диалоги с NPC</span>
+        <span class="feature-tag">Кат-сцены</span>
+        <span class="feature-tag">Бой с волками</span>
+        <span class="feature-tag">Мини-босс</span>
+        <span class="feature-tag">Головоломка (ветряк)</span>
+        <span class="feature-tag">Болото с проводником</span>
+        <span class="feature-tag">Лабиринт гробницы</span>
+        <span class="feature-tag">Инвентарь и карта</span>
+        <span class="feature-tag">Сохранение прогресса</span>
+        <span class="feature-tag">Повторное прохождение</span>
+        <span class="feature-tag">Прокручиваемые титры</span>
+      </div>
+
+      <div class="grid-2" style="margin-top: 1.75rem;">
+        <article class="card">
+          <h3>🔨 Ban Hammer</h3>
+          <p>Легендарный артефакт в зале гробницы — цель всего путешествия и предмет, вокруг которого строится финал.</p>
+        </article>
+        <article class="card">
+          <h3>🗺 Секретная карта</h3>
+          <p>Находка в доме деда открывает маршрут к гробнице и запускает вторую половину истории.</p>
+        </article>
+      </div>
+    </section>
+
+    <footer>
+      <p><strong>Тень Молота</strong> · Shadow of the Hammer</p>
+      <p style="margin-top: 0.5rem;">
+        Roblox RPG / Adventure · Однопользовательская игра · 3 концовки
+      </p>
+      <p style="margin-top: 1rem; font-size: 0.78rem;">
+        Проект разрабатывается с Rojo + Roblox Studio.<br>
+        Исходники: <code style="color: var(--purple)">classical_game/</code>
+      </p>
+    </footer>
+  </div>
+</body>
+</html>
